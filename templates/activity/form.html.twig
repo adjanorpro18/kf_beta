@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des activites{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-3 mb-3 p-4">
+        <div class="card mb-2">
+            <div class="card-header text-center text-uppercase">
+                Creation d'une activite
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn-lg btn-primary float-right">Envoyer</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

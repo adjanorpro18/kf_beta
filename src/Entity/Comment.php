@@ -58,6 +58,7 @@ class Comment
 
     public function __construct()
     {
+        $this->setCreatedAt(new\Datetime());
         $this->comments = new ArrayCollection();
     }
 
@@ -166,5 +167,10 @@ class Comment
         $this->activity = $activity;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->activity;
     }
 }

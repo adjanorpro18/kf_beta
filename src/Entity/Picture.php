@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Entity
  * @ORM\Entity(repositoryClass=PictureRepository::class)
  */
 class Picture
@@ -22,12 +23,7 @@ class Picture
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
-
-    /**
-     * @ORM\Column(type="blob")
-     */
-    private $file;
+    private $filename;
 
     /**
      * @ORM\OneToMany(targetEntity=Category::class, mappedBy="pictures")
@@ -50,29 +46,18 @@ class Picture
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getFilename(): ?string
     {
-        return $this->name;
+        return $this->filename;
     }
 
-    public function setName(string $name): self
+    public function setFilename(string $filename): self
     {
-        $this->name = $name;
+        $this->filename = $filename;
 
         return $this;
     }
 
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    public function setFile($file): self
-    {
-        $this->file = $file;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Category[]
@@ -114,5 +99,10 @@ class Picture
         $this->activity = $activity;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->filename;
     }
 }

@@ -6,8 +6,10 @@ use App\Repository\ActivityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\Entity
  * @ORM\Entity(repositoryClass=ActivityRepository::class)
  */
 class Activity
@@ -27,7 +29,7 @@ class Activity
     /**
      * @ORM\Column(type="text")
      */
-    private $decsription;
+    private $description;
 
     /**
      * @ORM\Column(type="datetime")
@@ -35,7 +37,7 @@ class Activity
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="activities")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="activities", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -51,7 +53,7 @@ class Activity
     private $publics;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="activity", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="activity", orphanRemoval=true, cascade={"persist"})
      */
     private $pictures;
 
@@ -74,6 +76,7 @@ class Activity
 
     public function __construct()
     {
+        $this->setCreatedAt(new\Datetime());
         $this->comments = new ArrayCollection();
         $this->publics = new ArrayCollection();
         $this->pictures = new ArrayCollection();
@@ -97,14 +100,14 @@ class Activity
         return $this;
     }
 
-    public function getDecsription(): ?string
+    public function getDescription(): ?string
     {
-        return $this->decsription;
+        return $this->description;
     }
 
-    public function setDecsription(string $decsription): self
+    public function setDescription(string $description): self
     {
-        $this->decsription = $decsription;
+        $this->description = $description;
 
         return $this;
     }
@@ -263,5 +266,29 @@ class Activity
         $this->state = $state;
 
         return $this;
+    }
+
+    //rajout de la fonction de compteur pour les commentaires
+
+    public function getAverageMessage(): float
+    {
+
+        $sum = 0;
+        $total = 0;
+
+        foreach ($this->getComments() as $comment) {
+            $sum += $comment->getMessage();
+            $total++;
+        }
+        return $sum/$total;
+
+        if($sum/$total == 0){
+            return 0;
+        }
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

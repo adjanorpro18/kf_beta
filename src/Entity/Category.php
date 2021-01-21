@@ -31,7 +31,7 @@ class Category
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeActivity::class, inversedBy="category")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $typeActivities;
 
@@ -111,5 +111,10 @@ class Category
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->activities;
     }
 }

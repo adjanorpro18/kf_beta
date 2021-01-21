@@ -19,6 +19,24 @@ class ActivityRepository extends ServiceEntityRepository
         parent::__construct($registry, Activity::class);
     }
 
+    /**
+     * Methode qui retourne les activités les plus recentes
+     * @return Activity
+     */
+
+    public function TopTenRecentActivity()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+
+
+
+    }
+
     // /**
     //  * @return Activity[] Returns an array of Activity objects
     //  */

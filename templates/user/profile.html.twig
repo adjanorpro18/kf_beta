@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+    Mon profil
+{% endblock %}
+{% block body %}
+    <div class="jumbotron fluid d-flex p-4 m-3 w-100 ">
+       <div class="col-md-7">
+           <div class="row">
+               <label for="email" class="col-md-2">Email :</label>
+               <p class="col-md-5 float-left">{{ app.user.email }}</p>
+           </div>
+           <div class="row">
+               <label for="pseudo" class="col-md-3">Pseudonyme :</label>
+               <p class="col-md-5 float-left">{{ app.user.pseudo }}</p>
+           </div>
+           <div>
+              <button class="btn btn-default"><a href="{{  path ('user_profile_edit', {id: app.user.id}) }}"> Modifier le profil</a></button>
+               <button class="btn btn-wraning"><a href="{{  path ('reset_password', {id: app.user.id}) }}"> Modifier le mot de passe</a></button>
+           </div>
+
+       </div>
+
+{% endblock %}

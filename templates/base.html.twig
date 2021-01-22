@@ -4,12 +4,11 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        {# font awosome #}
-        <link href="/your-path-to-fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+        {# all links #}
         <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('dist/css/styles.css') }}" />
-        <link rel="stylesheet" href="{{ asset('build/styles/app.css') }}" />
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}" />
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -49,6 +48,7 @@
         {% block body %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('build/app.js') }}" />
         {% endblock %}
     </body>
 </html>

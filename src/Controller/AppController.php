@@ -18,7 +18,7 @@ class AppController extends AbstractController
         $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
         $activities = $activityRepository->TopTenRecentActivity();
 
-        return $this->redirectToRoute('activity_index');
+        //return $this->redirectToRoute('activity_index');
 
         return $this->render('app/index.html.twig', [
             'activities' => $activities,

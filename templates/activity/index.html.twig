@@ -1,97 +1,136 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des Activites{% endblock %}
-
 {% block body %}
     <div class="container text-center my-3">
-        <h3 class="font-weight-light mb-3"> Publications à la une</h3>
+        <h2 class="font-weight-light">Publications à la une</h2>
         <div class="row mx-auto my-auto">
             <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
                 <div class="carousel-inner w-100" role="listbox">
                     <div class="carousel-item active">
                         {% for activity in activities %}
-                            {% if not loop.last %}, {% endif %}
-                                <div class="col-md-4">
-                                    <div class="card card-body">
-                                        <div>
-                                            <p class="mb-2">{{ activity.name }}</p>
-                                            {% for pictures in activity.pictures %}
-                                                <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
-                                                     alt="pictures" width="100%" class="mb-2">
-                                            {% endfor %}
-                                            <br>
-                                            <div class="mt-2 d-flex justify-content-around ">
-                                                <p>
-                                                    {% for category in activity.category %}
-                                                        <small>Categorie: {{ category.name }} </small>
-                                                    {% endfor %}
-                                                </p>
-                                                <p>
-                                                    <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
-                                                </p>
-                                                <small>{{ activity.comments.count }}</small>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                        {% endfor %}
-                    </div>
-
-                <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle"
-                      aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
-                      aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-     </div>
-
-    <div class="container text-center my-3">
-    <h3 class="font-weight-light mb-3"> Publications à la une</h3>
-    <div class="row mx-auto my-auto">
-        <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
-            <div class="carousel-inner w-100" role="listbox">
-                <div class="carousel-item active">
-                    {% for activity in activities %}
-                        {% if not loop.last %}, {% endif %}
                         <div class="col-md-4">
                             <div class="card card-body">
                                 <div>
                                     <p class="mb-2">{{ activity.name }}</p>
                                     {% for pictures in activity.pictures %}
                                         <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
-                                             alt="pictures" width="100%" class="mb-2">
+                                             alt="pictures" width="80%" class="mb-2">
                                     {% endfor %}
                                     <br>
-                                    <p class="mt-2">
-                                        <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
-                                        {#  {% for activity in activities %}
-                                                    {{ activity.averageMessage | number_format(0, '.')}}
-                                                {% endfor %} #}
-                                    </p>
+                                    <div class="mt-2 d-flex justify-content-around ">
+                                        <p>
+                                            {% for category in activity.category %}
+                                                <small>Categorie: {{ category.name }} </small>
+                                            {% endfor %}
+                                        </p>
+                                        <p>
+                                            <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
+                                        </p>
+                                        <small>{{ activity.comments.count }}</small>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-item">
+                        {% for activity in activities %}
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <div>
+                                        <p class="mb-2">{{ activity.name }}</p>
+                                        {% for pictures in activity.pictures %}
+                                            <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
+                                                 alt="pictures" width="80%" class="mb-2">
+                                        {% endfor %}
+                                        <br>
+                                        <div class="mt-2 d-flex justify-content-around ">
+                                            <p>
+                                                {% for category in activity.category %}
+                                                    <small>Categorie: {{ category.name }} </small>
+                                                {% endfor %}
+                                            </p>
+                                            <p>
+                                                <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
+                                            </p>
+                                            <small>{{ activity.comments.count }}</small>
+                                        </div>
 
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-item">
+                        {% for activity in activities %}
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <div>
+                                        <p class="mb-2">{{ activity.name }}</p>
+                                        {% for pictures in activity.pictures %}
+                                            <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
+                                                 alt="pictures" width="80%" class="mb-2">
+                                        {% endfor %}
+                                        <br>
+                                        <div class="mt-2 d-flex justify-content-around ">
+                                            <p>
+                                                {% for category in activity.category %}
+                                                    <small>Categorie: {{ category.name }} </small>
+                                                {% endfor %}
+                                            </p>
+                                            <p>
+                                                <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
+                                            </p>
+                                            <small>{{ activity.comments.count }}</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-item">
+                        {% for activity in activities %}
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <div>
+                                        <p class="mb-2">{{ activity.name }}</p>
+                                        {% for pictures in activity.pictures %}
+                                            <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
+                                                 alt="pictures" width="100%" class="mb-2">
+                                        {% endfor %}
+                                        <br>
+                                        <div class="mt-2 d-flex justify-content-around ">
+                                            <p>
+                                                {% for category in activity.category %}
+                                                    <small>Categorie: {{ category.name }} </small>
+                                                {% endfor %}
+                                            </p>
+                                            <p>
+                                                <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
+                                            </p>
+                                            <small>{{ activity.comments.count }}</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
                 <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle"
-                      aria-hidden="true"></span>
+                    <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
                 <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
-                      aria-hidden="true"></span>
+                    <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
             </div>
         </div>
+        <h5 class="mt-2">Advances one slide at a time</h5>
     </div>
 {% endblock %}

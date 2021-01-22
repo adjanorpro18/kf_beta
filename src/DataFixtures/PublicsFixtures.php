@@ -34,6 +34,10 @@ class PublicsFixtures extends Fixture
         $publics ->setName('seniors');
         $manager->persist($publics );
 
+        $publics = new Publics();
+        $publics ->setName('famille');
+        $manager->persist($publics );
+
 
         $manager->flush();
     }

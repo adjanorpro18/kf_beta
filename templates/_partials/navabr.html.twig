@@ -23,9 +23,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">La carte</a>
                 </li>
+                {% if not  is_granted('IS_AUTHENTICATED_REMEMBERED') %}<li class="nav-item">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_register') }}" tabindex="-1" aria-disabled="true">S'inscrire</a>
                 </li>
+                {% endif %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}<li class="nav-item">
+                </li>
+                        <a class="nav-link" href="{{ path('user_profile', {id: app.user.id}) }}" tabindex="-1" aria-disabled="true">Mon profil</a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}" tabindex="-1" aria-disabled="true">Se connecter</a>
                 </li>

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des activites{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid mt-3 mb-1 p-4">
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                    {# Verifier si la route est "activity_edit" on affiche les images #}
+                    {%  if app.request.attributes.get('_route') == 'activity_edit' %}
+                        {% for picture in activity.pictures %}
+                            <div>
+                                <img src="{{ asset('/uploads/images/'~ picture.filename) }}" alt="Picture" width="50">
+                                <a href="{{ path('activity-picture_delete', {id: picture.id}) }}"
+                                   data-delete data-token =" {{ csrf_token('delete' ~ picture.id) }}">Supprimer</a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <button class="btn btn-primary float-right">{{ button_label|default('Envoyer') }}</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

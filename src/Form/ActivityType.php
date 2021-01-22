@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -28,7 +29,9 @@ class ActivityType extends AbstractType
     {
         $builder
 
-            ->add('name')
+            ->add('name', TextType::class,[
+                'label'=> "Nom de l'activité"
+            ])
             ->add('description', CKEditorType::class,[
                 'label'=> 'Description : '
                 ])
@@ -57,7 +60,7 @@ class ActivityType extends AbstractType
 
 
             ->add('pictures', FileType::class, [
-                'label' => 'false',
+                'label' => 'Image',
                 'mapped' => false,
                 'required' => false,
                 'multiple'=>true

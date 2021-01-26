@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <div class="jumbotron fluid d-flex p-4 m-3 justify-content-start ">
+
+        <h3 class="float-left">Modifier son compte</h3>
+
+        <div class="jumbotron fluid d-flex p-4 m-3 w-100 justify-content-start ">
+
+            <div class="col-md-12">
+                <div class="row mb-3">
+                    {{ include('user/_form.html.twig', {'button_class': 'Update'}) }}
+                    {{ include('user/_delete_form.html.twig') }}
+                </div>
+                <div class="row mb-3">
+                    <a href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

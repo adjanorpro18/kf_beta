@@ -10,8 +10,6 @@ use App\Entity\Publics;
 use App\Entity\State;
 use App\Entity\TypeActivity;
 use App\Entity\User;
-use FM\ElfinderBundle\ElFinder\ElFinder;
-use FM\ElfinderBundle\Form\Type\ElFinderType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -34,37 +32,51 @@ class ActivityType extends AbstractType
             ])
             ->add('description', CKEditorType::class,[
                 'label'=> 'Description : '
-                ])
+            ])
 
             ->add('category', EntityType::class,[
-                   'class'=> Category::class,
-                   'label'=> 'Catégorie: ',
-                   'choice_label' =>'name',
-                   'multiple' => true
-           ])
+                'class'=> Category::class,
+                'label'=> 'Catégorie: ',
+                'placeholder' => 'Choisir une catégorie',
+                'choice_label'=> function($category){
+                    return $category->getName();
+                },
+            ])
 
 
             ->add('publics', EntityType::class,[
                 'class'=>Publics::class,
-                'choice_label'=>'name',
                 'label'=> 'Publics : ',
-                'multiple'=> true
+                'placeholder' => 'Choisir un public ',
+                'multiple'=> true,
+
             ])
 
 
             ->add('typeActivity', EntityType::class,[
                 'class'=>TypeActivity::class,
                 'choice_label'=>'name',
+                'placeholder' => 'Choisir un type de l\'activité',
                 'label'=>'Type d\'Activité :'
             ])
-
 
             ->add('pictures', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,
                 'required' => false,
-                'multiple'=>true
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/gif',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Vous devez uploader un format d\'image valide.',
+                    ])
+                ],
             ])
+
+           // ->add('comments')
 
         ;
     }

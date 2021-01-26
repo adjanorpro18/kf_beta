@@ -10,7 +10,7 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_index') }}" tabindex="-1" aria-disabled="true">Accueil</a>
+                    <a class="nav-link" href="{{ path('activity_index') }}" tabindex="-1" aria-disabled="true">Accueil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">A propos</a>
@@ -29,9 +29,9 @@
                 </li>
                 {% endif %}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}<li class="nav-item">
-                </li>
+                    {# </li>
                         <a class="nav-link" href="{{ path('user_profile', {id: app.user.id}) }}" tabindex="-1" aria-disabled="true">Mon profil</a>
-                </li>
+                </li>#}
                 {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}" tabindex="-1" aria-disabled="true">Se connecter</a>

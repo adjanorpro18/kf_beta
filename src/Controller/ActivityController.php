@@ -5,61 +5,95 @@ namespace App\Controller;
 use App\Entity\Activity;
 use App\Entity\Comment;
 use App\Entity\Picture;
+use App\Entity\State;
 use App\Entity\User;
 use App\Form\ActivityType;
 use App\Form\CommentType;
-use App\Form\PictureType;
 use App\Repository\ActivityRepository;
-use App\Repository\CommentRepository;
-use App\Repository\IconRepository;
-use App\Repository\PictureRepository;
-use App\Repository\ProfileRepository;
 use App\Repository\StateRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 /**
  * @Route("/activity")
  */
-
 class ActivityController extends AbstractController
 {
-
     /**
-     * Affiche la liste des activites
-     * @Route("", name="activity_index", methods={"GET"})
+     * Affiche la liste des activités
+     * @Route("/", name="activity_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(ActivityRepository $activityRepository): Response
     {
         $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
-        $activities = $activityRepository->TopTenRecentActivity(); //Liste des 10 recentes activités publiées
-        //dump($activities);
+        $activities = $activityRepository->TopTenRecentActivity();
 
-        $this->redirectToRoute('app_index');
+        //return $this->redirectToRoute('app_index');
+
 
         return $this->render('activity/index.html.twig', [
             'activities' => $activities
         ]);
     }
 
+    /**
+     * Affiche le formulaire de création d'activité
+     * @Route("/new", name="activity_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, StateRepository $stateRepository): Response
+    {
+        $activity = new Activity();
+        $user = $this->getUser(); //recuperer l'utilisateur connecté
+        $activity->setUser($user); //affecte à la creation d'activité
+        $state = $stateRepository->findOneBy(array('id'=> 8)); // la valeur de l'état en base selon son id
+        $activity->setState($state);  //etat de l'activité une fois créée
+
+        $form = $this->createForm(ActivityType::class, $activity);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            //Pour recuperer les pictures transmises
+            $picture = $form->get('pictures')->getData();
+            //on boucle sur la picture
+           if ($picture) {
+                $fichier = md5(uniqid()) . '.' . $picture->guessExtension(); // on genere un nom de fichier pour eviter des noms dupliqués
+                // On copie le fichier dans le dossier uploads
+                $picture->move(
+                    $this->getParameter('pictures_directory'), $fichier
+                );
+                // On crée l'image dans la base de données: stocker
+                $img = new Picture();
+                $img->setFilename($fichier);
+                $activity->addPicture($img);
+
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($activity);
+            $entityManager->flush();
+               // die();
+            return $this->redirectToRoute('activity_index');
+        }
+
+        return $this->render('activity/new.html.twig', [
+            'activity' => $activity,
+            'form' => $form->createView(),
+        ]);
+    }
 
     /**
-     * Affiche une activité
-     * @Route("/{id}", name="activity_show", methods={"GET", "POST"}, requirements={"id": "\d+"})
-
+     * @Route("/{id}", name="activity_show", methods={"GET", "POST"})
      */
-    public function show(ActivityRepository $activityRepository, $id, Request $request, Activity $activity, EntityManagerInterface $em, CommentRepository $commentRepository): Response
+    public function show(Activity $activity, Request $request): Response
     {
+        //injecter la page des commentaires dans la visualisation des activités
 
-
-        //gestion du formulaire des commentaires
         $comment = new Comment();
+        $comment->setValidate(true);
         $formComment = $this->createForm(CommentType::class, $comment);
         $formComment->handleRequest($request);
         if ($formComment->isSubmitted() && $formComment->isValid()) {
@@ -69,49 +103,39 @@ class ActivityController extends AbstractController
 
 
             $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
-            $activity = $activityRepository->find($id);
+           // $activity = $activityRepository->find($id);
 
-            $em->persist($comment);
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
 
             return $this->redirectToRoute('activity_show', ['id' => $activity->getId()]);
 
-            $comment = $formComment->getData();
+            $formComment = $formComment->getData();
 
         }
-
 
         return $this->render('activity/show.html.twig', [
             'activity' => $activity,
-            'comment' => $formComment->createView()
+            'formComment' => $formComment->createView(),
         ]);
     }
 
     /**
-     * Afficher le formulaire de creation d'une activité
-     * @Route("/new", name="activity_new", methods={"GET", "POST"})
-
+     * @Route("/{id}/edit", name="activity_edit", methods={"GET" ,"POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em, StateRepository $stateRepository): Response
+    public function edit(Request $request, Activity $activity): Response
     {
-        $activity = new Activity();
-        $user = $this->getUser();
-        $activity->setUser($user); //on veut récuperer l'utilisateur connecté
-        $state = $stateRepository->findOneBy(array('id' => '8'));  //on definie l'état de l'activté à la valeur En cours
-        $activity->setState($state);
-
         $form = $this->createForm(ActivityType::class, $activity);
-
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $activity = $form->getData();
-            //Pour recuperer les images transmises
-            $pictures = $form->get('pictures')->getData();
 
-            //on boucle sur les images
-            foreach ($pictures as $picture) {
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            //Pour recuperer les pictures transmises
+            $picture = $form->get('pictures')->getData();
+            //on boucle sur les pictures
+            if ($picture) {
                 $fichier = md5(uniqid()) . '.' . $picture->guessExtension(); // on genere un nom de fichier pour eviter des noms dupliqués
-
                 // On copie le fichier dans le dossier uploads
                 $picture->move(
                     $this->getParameter('pictures_directory'), $fichier
@@ -121,82 +145,36 @@ class ActivityController extends AbstractController
                 $img->setFilename($fichier);
                 $activity->addPicture($img);
 
+                }
+
+                $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('activity_index');
             }
 
-            $this->addFlash('success', 'Activité créée avec succès!');
-            $em->persist($activity);
-            $em->flush();
-            return $this->redirectToRoute('activity_index');
-        }
-
-        return $this->render('activity/_form.html.twig', [
-            'activity'=> $activity,
-            'form' => $form->createView()
-
-        ]);
-    }
-
-
-    /**
-     * Affiche le formulaire d'édition d'une activité (GET)
-     * Traite le formulaire d'édition d'une activité (POST)
-     * @Route("/{id}/edit", name="activity_edit", methods={"GET", "POST"})
-     */
-    public function edit(Activity $activity, EntityManagerInterface $em, Request $request)
-    {
-        //$activity = $em->getRepository(Activity::class)->find($id);
-        // $activity->setUser($this->getUser());
-        //verifier si le user a le droit de modifier
-
-        $form = $this->createForm(ActivityType::class, $activity);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $activity = $form->getData();
-            //Pour recuperer les images transmises
-            $pictures = $form->get('pictures')->getData();
-
-            //on boucle sur les images
-            foreach ($pictures as $picture) {
-                $fichier = md5(uniqid()) .'.'. $picture->guessExtension(); // on genere un nom de fichier pour eviter des noms dupliqués
-
-                // On copie le fichier dans le dossier uploads
-                $picture->move(
-                    $this->getParameter('pictures_directory'), $fichier
-                );
-                // On crée l'image dans la base de données: stocker
-                $img = new Picture();
-                $img->setFilename($fichier);
-                $activity->addPicture($img);
-
-            }
-            $em->flush();
-            return $this->redirectToRoute('activity_index');
-
-        }
         return $this->render('activity/edit.html.twig', [
             'activity' => $activity,
-            'form'=> $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
-
     /**
-     * Suppression d'activité
-     * @Route("/{id}", name="activity_delete", methods={"DELETE"} )
+     * @Route("/{id}", name="activity_delete", methods={"DELETE"})
      */
-    public function delete(Activity $activity, Request $request, EntityManagerInterface $em)
+    public function delete(Request $request, Activity $activity): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $activity->getId(), $request->request->get('_token'))) {
-            $em->remove($activity);
-            $em->flush();
+        if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($activity);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('activity_index');
     }
 
+
     /**
-     * Suppression des images
+     * Suppression des pictures
      * @Route("/delete/picture/{id}", name="activity-picture_delete", methods={"DELETE"})
      */
     public function deletePicture(Picture $picture, Request $request){
@@ -220,7 +198,4 @@ class ActivityController extends AbstractController
             return new JsonResponse(['error' => 'Token Invalide'], 400);
         }
     }
-
 }
-
-

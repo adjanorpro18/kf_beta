@@ -14,10 +14,10 @@ class CommentType extends AbstractType
         $builder
             ->add('message')
            // ->add('createdAt')
-            ->add('validate')
+          // ->add('validate')
             //->add('user')
-           // ->add('comment')
-            //->add('activity')
+           //->add('comment')
+            //->add('activity1')
         ;
     }
 

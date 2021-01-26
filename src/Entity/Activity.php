@@ -48,17 +48,19 @@ class Activity
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Publics::class, inversedBy="activities")
+     * @ORM\ManyToMany(targetEntity=Publics::class, inversedBy="activities" , cascade="persist")
      */
     private $publics;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="activity", orphanRemoval=true, cascade={"persist"})
+
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="activity", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $pictures;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="activities")
+     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="activities")
      */
     private $category;
 
@@ -80,7 +82,6 @@ class Activity
         $this->comments = new ArrayCollection();
         $this->publics = new ArrayCollection();
         $this->pictures = new ArrayCollection();
-        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -210,10 +211,11 @@ class Activity
 
     public function removePicture(Picture $picture): self
     {
-        if ($this->pictures->removeElement($picture)) {
+        if ($this->pictures->contains($picture)) {
+            $this->images->removeElement($picture);
             // set the owning side to null (unless already changed)
-            if ($picture->getActivity() === $this) {
-                $picture->setActivity(null);
+            if ($picture->getAnnonces() === $this) {
+                $picture->setAnnonces(null);
             }
         }
 
@@ -221,28 +223,22 @@ class Activity
     }
 
     /**
-     * @return Collection|Category[]
+     * @return mixed
      */
-    public function getCategory(): Collection
+    public function getCategory()
     {
         return $this->category;
     }
 
-    public function addCategory(Category $category): self
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
-        }
-
-        return $this;
+        $this->category = $category;
     }
 
-    public function removeCategory(Category $category): self
-    {
-        $this->category->removeElement($category);
 
-        return $this;
-    }
 
     public function getTypeActivity(): ?TypeActivity
     {
@@ -270,7 +266,7 @@ class Activity
 
     //rajout de la fonction de compteur pour les commentaires
 
-    public function getAverageMessage(): float
+    public function iscountMessage(): float
     {
 
         $sum = 0;
@@ -280,11 +276,8 @@ class Activity
             $sum += $comment->getMessage();
             $total++;
         }
-        return $sum/$total;
+        return $total;
 
-        if($sum/$total == 0){
-            return 0;
-        }
     }
 
     public function __toString()

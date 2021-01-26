@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass=PictureRepository::class)
@@ -31,7 +32,7 @@ class Picture
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="pictures")
+     * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="pictures", cascade="persist")
      * @ORM\JoinColumn(nullable=false)
      */
     private $activity;
@@ -103,6 +104,6 @@ class Picture
 
     public function __toString()
     {
-        return $this->filename;
+        return $this->activity;
     }
 }

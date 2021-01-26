@@ -1,7 +1,7 @@
 
 window.onload = () => {
     // Gestion des boutons "Supprimer"
-    let links = document.querySelectorAll("[data-delete]")
+    let links = document.querySelector("data-delete")
 
     // On boucle sur links
     for(link of links){
@@ -28,8 +28,9 @@ window.onload = () => {
                         this.parentElement.remove()
                     else
                         alert(data.error)
-                }).catch(e => alert(e))
-            }
+                           .catch(e => alert(e))
+                })
+            }document.location.reload();
         })
     }
 }

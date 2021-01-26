@@ -13,12 +13,12 @@ class AppController extends AbstractController
     /**
      * @Route("", name="app_index")
      */
-    public function index(ActivityRepository $repository): Response
+    public function index(ActivityRepository $activityRepository): Response
     {
         $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
         $activities = $activityRepository->TopTenRecentActivity();
 
-        //return $this->redirectToRoute('activity_index');
+        return $this->redirectToRoute('activity_index');
 
         return $this->render('app/index.html.twig', [
             'activities' => $activities,

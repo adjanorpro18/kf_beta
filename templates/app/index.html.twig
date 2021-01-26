@@ -14,8 +14,8 @@
                             <div class="card card-body">
                                 <div>
                                     <p class="mb-2">{{ activity.name }}</p>
-                                    {% for pictures in activity.pictures %}
-                                        <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
+                                    {% for picture in activity.pictures %}
+                                        <img src="{{ asset('/uploads/'~ picture.filename) }}"
                                              alt="pictures" width="100%" class="mb-2">
                                     {% endfor %}
                                     <br>
@@ -26,7 +26,7 @@
                                             {% endfor %}
                                         </p>
                                         <p>
-                                            <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
+                                            <small><a href="{{ path('activity_show', { 'id': activity.id}) }}">Voir</a></small>
                                         </p>
                                         <small>{{ activity.comments.count }}</small>
                                     </div>
@@ -42,8 +42,8 @@
                             <div class="card card-body">
                                 <div>
                                     <p class="mb-2">{{ activity.name }}</p>
-                                    {% for pictures in activity.pictures %}
-                                        <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
+                                    {% for picture in activity.pictures %}
+                                        <img src="{{ asset('/uploads/'~ picture.filename) }}"
                                              alt="pictures" width="100%" class="mb-2">
                                     {% endfor %}
                                     <br>
@@ -71,7 +71,7 @@
                                     <div>
                                         <p class="mb-2">{{ activity.name }}</p>
                                         {% for pictures in activity.pictures %}
-                                            <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
+                                            <img src="{{ asset('/uploads/pictures/'~ pictures.filename) }}"
                                                  alt="pictures" width="100%" class="mb-2">
                                         {% endfor %}
                                         <br>
@@ -98,7 +98,7 @@
                                 <div>
                                     <p class="mb-2">{{ activity.name }}</p>
                                     {% for pictures in activity.pictures %}
-                                        <img src="{{ asset('/uploads/images/'~ pictures.filename) }}"
+                                        <img src="{{ asset('/uploads/pictures/'~ pictures.filename) }}"
                                              alt="pictures" width="100%" class="mb-2">
                                     {% endfor %}
                                     <br>
@@ -111,7 +111,7 @@
                                         <p>
                                             <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
                                         </p>
-                                        <small>{{ activity.comments.count }}</small>
+                                        {#  <small>{{ activity.comments.count }}</small> #}
                                     </div>
 
                                 </div>

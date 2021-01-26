@@ -1,68 +1,102 @@
 <?php
 
-
 namespace App\Controller;
 
-
-use App\Entity\Profile;
 use App\Entity\User;
-use App\Form\ProfileType;
-use App\Form\UpdateUserType;
+use App\Form\UserType;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-
 /**
- * Class UserController
  * @Route("/user")
  */
-
 class UserController extends AbstractController
 {
-
+    /**
+     * @Route("/", name="user_index", methods={"GET"})
+     */
+    public function index(UserRepository $userRepository): Response
+    {
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+        ]);
+    }
 
     /**
-     * @Route ("/{id}/profile", name="user_profile", requirements={"id": "\d+"}, methods={"GET"})
-     * Afficher le profil de l'utilisateur
+     * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function profile($id, UserRepository $userRepository)
+    public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $user = new User();
+        $user->setRoles(['ROLE_AMBASSADEUR']);
 
-        $user = $userRepository->find($id);
-        return $this->render('user/profile.html.twig', [
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            // hasher le mot d epasse
+            $hashed = $encoder->encodePassword($user, $user->getPassword());
+
+            $user->setPassword($hashed);
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->render('user/new.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="user_show", methods={"GET"})
+     */
+    public function show(User $user): Response
+    {
+        return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
     }
 
-
     /**
-     * @Route ("/{id}/profile/edit", name="user_profile_edit", requirements={"id": "\d+"}, methods={"GET","POST"})
-     *Modifier le profil de l'utilisateur
+     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function userProfileEdit(Request $request, $id, UserRepository $userRepository)
+    public function edit(Request $request, User $user): Response
     {
-        $user = $userRepository->find($id);
-        $user = $this->getUser();
-        $form = $this->createForm(ProfileType::class, $user);
-
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash('message', 'Profil mis à jour');
-            return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
+            return $this->redirectToRoute('user_index');
         }
-        return $this->render('user/proflie_update.html.twig', [
-            'updateForm' => $form->createView()
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, User $user): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('user_index');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Activity;
 use App\Entity\Comment;
 use App\Entity\Picture;
@@ -10,6 +11,7 @@ use App\Entity\State;
 use App\Entity\User;
 use App\Form\ActivityType;
 use App\Form\CommentType;
+use App\Form\SearchType;
 use App\Repository\ActivityRepository;
 use App\Repository\StateRepository;
 use App\Repository\UserRepository;
@@ -27,14 +29,24 @@ class ActivityController extends AbstractController
      * Affiche la liste des activités
      * @Route("/", name="activity_index", methods={"GET"})
      */
-    public function index(ActivityRepository $activityRepository): Response
+    public function index(ActivityRepository $activityRepository, Request $request): Response
+
     {
+        // fonction search bar pour faire la recherche
+        $data = new SearchData();
+        $form = $this ->createForm(SearchType::class, $data);
+        $form->handleRequest($request);
+
+        $activities = $activityRepository->findSearch($data);
+
         $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
         $activities = $activityRepository->TopTenRecentActivity();
 
 
+
         return $this->render('activity/index.html.twig', [
-            'activities' => $activities
+            'activities' => $activities,
+            'form'=>$form->createView(),
         ]);
     }
 

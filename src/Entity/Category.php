@@ -115,6 +115,6 @@ class Category
 
     public function __toString()
     {
-        return $this->activities;
+        return $this->name;
     }
 }

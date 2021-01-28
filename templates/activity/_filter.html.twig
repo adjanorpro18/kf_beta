@@ -1,0 +1,11 @@
+{{ form_start (form) }}
+    {{ form_row(form.q) }}
+
+<h6>Catégories</h6>
+{{ form_widget(form.categories) }}
+<h6> Date minimum</h6>
+{{ form_widget(form.min) }}
+
+<button type="submit" class="btn btn-primary w-100"> Filtrer</button>
+
+{{ form_end (form) }}

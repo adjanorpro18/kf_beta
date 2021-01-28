@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Activity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -36,6 +37,50 @@ class ActivityRepository extends ServiceEntityRepository
 
 
     }
+
+    /**
+     * Récupère les activités en lien avec une recherche
+     * @param SearchData $search
+     * @return Activity[]
+     */
+    public function findSearch(SearchData $search): array
+    {
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('c', 'a')
+            ->join('a.category','c');
+
+        //Recherche text
+
+        if(!empty($search->q)){
+            $query= $query
+                ->andWhere('a.name LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }elseif(!empty($search->q)) {
+            $query = $query
+                ->andWhere('a.description LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+
+        }
+
+        //Pour la date
+
+        if(!empty($search->min)){
+            $query = $query
+                ->andWhere('a.createdAt >= :min')
+                ->setParameter('min', $search->min);
+
+        }
+        //Recherche par catégorie
+
+        if(!empty($search->categories)){
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $search-> categories);
+        }
+        return $query->getQuery()->getResult();
+    }
+
 
     // /**
     //  * @return Activity[] Returns an array of Activity objects

@@ -4,16 +4,6 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    {# Vérifier si la route est "annonces_edit" on affiche les images #}
-    {% if app.request.attributes.get('_route') == 'activity_edit' %}
-        <h2>Image</h2>
-        {% for picture in activity.pictures %}
-            <div>
-                <img src="{{ asset('/uploads/' ~ picture.filename) }}" alt="Image" width="150">
-                <a href="{{ path('activity-picture_delete', {id: picture.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ picture.id) }}">Supprimer</a>
-            </div>
-        {% endfor %}
-    {% endif %}
     <button class="btn btn-outline-primary ">{{ button_label|default('Enregistrer') }}</button>
     {{ form_end(form) }}
 

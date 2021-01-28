@@ -64,16 +64,7 @@ class ActivityType extends AbstractType
                 'label' => 'Image',
                 'mapped' => false,
                 'required' => false,
-                'constraints' => [
-                    new File([
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/gif',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Vous devez uploader un format d\'image valide.',
-                    ])
-                ],
+                'multiple'=> true,
             ])
 
            // ->add('comments')

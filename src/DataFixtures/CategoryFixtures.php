@@ -4,10 +4,9 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class CategoryFixtures extends Fixture implements DependentFixtureInterface
+class CategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -59,13 +58,4 @@ class CategoryFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
-    {
-        return array(
-            TypeActivityFixtures::class,
-            PicturesFixtures::class,
-
-        );
-
-    }
 }

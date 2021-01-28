@@ -6,11 +6,25 @@
         <div class="container">
             <h3>Modifier une activité</h3>
 
+            {# Vérifier si la route est "annonces_edit" on affiche les images #}
+            {% if app.request.attributes.get('_route') == 'activity_edit' %}
+                <h2>Image</h2>
+                {% for picture in activity.pictures %}
+                    <div>
+                        <img src="{{ asset('/uploads/' ~ picture.filename) }}" alt="Image" width="150">
+                        <a href="{{ path('activity_picture_delete', {id: picture.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ picture.id) }}">Supprimer</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
             {{ include('activity/_form.html.twig', {'button_label': 'Modifier', 'button_class' : "btn-outline-warning"}) }}
 
             <a href="{{ path('activity_index') }}" class="btn btn-sm btn-outline-secondary float-right">Retour</a>
 
             {{ include('activity/_delete_form.html.twig') }}
         </div>
+{% endblock %}
 
+{% block javascripts%}
+        <script src="{{ asset('js/pictures.js') }}"></script>
 {% endblock %}

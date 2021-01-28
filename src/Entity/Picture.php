@@ -32,8 +32,8 @@ class Picture
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="pictures", cascade="persist")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="pictures", cascade={"remove"})
+     *
      */
     private $activity;
 
@@ -104,6 +104,6 @@ class Picture
 
     public function __toString()
     {
-        return $this->activity;
+        return $this->filename;
     }
 }

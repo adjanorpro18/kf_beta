@@ -1,7 +1,7 @@
 
 window.onload = () => {
     // Gestion des boutons "Supprimer"
-    let links = document.querySelector("data-delete")
+    let links = document.querySelectorAll("[data-delete]")
 
     // On boucle sur links
     for(link of links){

@@ -39,21 +39,13 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $pseudo;
 
-    /**
-     * @Assert\Valid
-     * @ORM\OneToOne(targetEntity=Profile::class, inversedBy="user", cascade={"persist", "remove"})
-     */
-    private $profile;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
@@ -64,6 +56,33 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="user", orphanRemoval=true)
      */
     private $activities;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = true;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Profile::class, inversedBy="users")
+     */
+    private $profile;
+
+    /**
+     * @return bool
+     */
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    /**
+     * @param bool $isVerified
+     */
+    public function setIsVerified(bool $isVerified): void
+    {
+        $this->isVerified = $isVerified;
+    }
+
 
     public function __construct()
     {
@@ -149,17 +168,6 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
 
     public function getPseudo(): ?string
     {
@@ -169,18 +177,6 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
-    public function getProfile(): ?Profile
-    {
-        return $this->profile;
-    }
-
-    public function setProfile(?Profile $profile): self
-    {
-        $this->profile = $profile;
 
         return $this;
     }
@@ -244,4 +240,18 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+
 }

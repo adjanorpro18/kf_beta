@@ -1,158 +1,157 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Kids & Family Activités ! {% endblock %}
+{% block title %} Kids & Family! {% endblock %}
 
 
 {% block body %}
-    <div class="container text-center my-3">
-        <h2 class="font-weight-light">Publications à la une</h2>
-            {% for activity in activities %}
-            <div class="row mx-auto my-auto">
-                <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
-                    <div class="carousel-inner w-100" role="listbox">
-                        <div class="carousel-item active">
-                                <div class="col-md-3 p-3">
-                                    <div class="card card-body">
-                                        <div>
-                                            <p class="mb-2">{{ activity.name }}</p>
 
-                                              {% for picture in activity.pictures %}
-                                                    <img src="{{ asset('/uploads/'~ picture.filename) }}"
-                                                         alt="pictures" width="200" height="150" class="mb-2">
-                                                {% endfor %}
-                                            <br>
-                                            <div class="mt-2 d-flex justify-content-around ">
-                                                <p>
+    <div class="container-fluid m-2 p-2 border-rounded">
+        <div class="row mb-4">
+            <div class="col-md-12">
 
-                                                <h6><a href="#"> {{ activity.category.name }} </a></h6>
-
-                                                </p>
-                                                <p>
-                                                    <a href="{{ path('activity_show', { id: activity.id}) }}"><i
-                                                                class="far fa-eye m-2"></i></a>
-                                                    <a href="#"><i
-                                                                class="fas fa-heart m-2"></i></a> {# compteur à mettre en place #}
-
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
+            </div>
+        </div>
+        <div class="row border-rounded p-3 m-3">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2 border p-2 m-2">
+                        <div class="row justify-content-center p-1">
+                            <div class="col-md-12 mb-2">
+                                <h5 class="text-primary p-2">Catégories</h5>
+                                <div class="form-check">
+                                    <input class="form-check-input " type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label " for="gridCheck1">Arts & Culture</label>
                                 </div>
-                            <div class="col-md-3 p-3">
-                                <div class="card card-body">
-                                    <div>
-                                        <p class="mb-2">{{ activity.name }}</p>
-
-                                        {% for picture in activity.pictures %}
-                                            <img src="{{ asset('/uploads/'~ picture.filename) }}"
-                                                 alt="pictures" width="200" height="150" class="mb-2">
-                                        {% endfor %}
-                                        <br>
-                                        <div class="mt-2 d-flex justify-content-around ">
-                                            <p>
-
-                                            <h5><a href="#"> {{ activity.category.name }} </a></h5>
-
-                                            </p>
-                                            <p>
-                                                <a href="{{ path('activity_show', { id: activity.id}) }}"><i
-                                                            class="far fa-eye m-2"></i></a>
-                                                <a href="#"><i
-                                                            class="fas fa-heart m-2"></i></a> {# compteur à mettre en place #}
-
-                                            </p>
-
-                                        </div>
-
-                                    </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Cuisine</label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Décoration</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">DIY</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Environnement</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Jeux</label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Loisirs</label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Sciences</label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Sorties éducatives</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Vivre ensemble</label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">Autres</label>
                                 </div>
                             </div>
-                            <div class="col-md-3 p-3">
-                                <div class="card card-body">
-                                    <div>
-                                        <p class="mb-2">{{ activity.name }}</p>
-
-                                        {% for picture in activity.pictures %}
-                                            <img src="{{ asset('/uploads/'~ picture.filename) }}"
-                                                 alt="pictures" width="200" height="150" class="mb-2">
-                                        {% endfor %}
-                                        <br>
-                                        <div class="mt-2 d-flex justify-content-around ">
-                                            <p>
-
-                                            <h5><a href="#"> {{ activity.category.name }} </a></h5>
-
-                                            </p>
-                                            <p>
-                                                <a href="{{ path('activity_show', { id: activity.id}) }}"><i
-                                                            class="far fa-eye m-2"></i></a>
-                                                <a href="#"><i
-                                                            class="fas fa-heart m-2"></i></a> {# compteur à mettre en place #}
-
-                                            </p>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 p-3">
-                                <div class="card card-body">
-                                    <div>
-                                        <p class="mb-2">{{ activity.name }}</p>
-
-                                        {% for picture in activity.pictures %}
-                                            <img src="{{ asset('/uploads/'~ picture.filename) }}"
-                                                 alt="pictures" width="200" height="150" class="mb-2">
-                                        {% endfor %}
-                                        <br>
-                                        <div class="mt-2 d-flex justify-content-around ">
-                                            <p>
-
-                                            <h5><a href="#"> {{ activity.category.name }} </a></h5>
-
-                                            </p>
-                                            <p>
-                                                <a href="{{ path('activity_show', { id: activity.id}) }}"><i
-                                                            class="far fa-eye m-2"></i></a>
-                                                <a href="#"><i
-                                                            class="fas fa-heart m-2"></i></a> {# compteur à mettre en place #}
-
-                                            </p>
-
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <div>
+                                <button type="submit" class=" bg-primary btn-md text-white rounded">Valider</button>
                             </div>
                         </div>
                     </div>
-                    <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle p-2"
-                         aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
-                        aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    {% for activity in activities %}
+                    {% if not loop.last %}
+                    <div class="col-md-6 border p-2 m-2 overflow-x:scroll">
+                        <h5 class="text-center p-2"><i class="fas fa-pen-square mr-2"></i>Les Publications</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                {% for picture in activity.pictures %}
+                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                {% for picture in activity.pictures %}
+                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                {% for picture in activity.pictures %}
+                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                {% for picture in activity.pictures %}
+                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                {% for picture in activity.pictures %}
+                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                {% for picture in activity.pictures %}
+                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 border m-2 p-2 overflow-x:scroll">
+                        <h5 class="text-center text-primary p-2"><i class="fas fa-heart mr-2"></i>A la une </h5>
+                        <div class="row mb-3 d-flex">
+                            <div class="col-md-12  ">
+                                {% for picture in activity.pictures %}
+                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% for picture in activity.pictures %}
+                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        {% endfor %}
-        <div class="d-flex text-center justify-content-center">
-            <h6 class="m-2 p-2"><a href="#" class="mr-2">Conditions d'utilisation</a> <a href="#">Politique de Confidentialité</a>
-                {% if  is_granted(['ROLE_AMBASSADOR']) %}
-                    <a href="{{ path('activity_new') }}" class="btn btn-sm btn-outline-success "><i class="fas fa-plus-square"></i></a>
-                {% endif %}
-
-            </h6>
+            {% endif %}
+            {% endfor %}
         </div>
+        <div class="row border">
+            <div class="col-md-12 ml-4 d-flex justify-content-around align-items-baseline">
+                {# liens de pied de page #}
+                    <h6 class="m-2 p-2"><a href="#" class="mr-2">Conditions d'utilisation</a> |  <a href="#">Politique de
+                            Confidentialité</a></h6>
+
+                <div class="float-left"> © Kids  &  Family 2021</div>
+                    <div>
+                        {% if  is_granted(['ROLE_AMBASSADOR','ROLE_ADMIN']) %}
+                            <a href="{{ path('activity_new') }}" class="btn btn-sm btn-outline-success "><i
+                                        class="fas fa-plus-square"></i></a>
+                        {% endif %}
+                    </div>
 
 
+                    <div class="justify-content-space-between">
+                        <a href="#" class="btn btn-outline-warning"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-primary"><i class="fab fa-facebook-square"></i></a>
+                        <a href="#" class="btn btn-outline-danger"><i class="fab fa-youtube-square"></i></a>
+                    </div>
 
+                </div>
+            </div>
     </div>
 
 {% endblock %}

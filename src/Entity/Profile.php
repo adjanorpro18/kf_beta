@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,15 +24,21 @@ class Profile
      */
     private $name;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="profile", cascade={"persist", "remove"})
-     */
-    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Icon::class, inversedBy="profile")
      */
     private $icon;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="profile")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -49,27 +57,6 @@ class Profile
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($user === null && $this->user !== null) {
-            $this->user->setProfile(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($user !== null && $user->getProfile() !== $this) {
-            $user->setProfile($this);
-        }
-
-        $this->user = $user;
-
-        return $this;
-    }
 
     public function getIcon(): ?Icon
     {
@@ -79,6 +66,36 @@ class Profile
     public function setIcon(?Icon $icon): self
     {
         $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getProfile() === $this) {
+                $user->setProfile(null);
+            }
+        }
 
         return $this;
     }

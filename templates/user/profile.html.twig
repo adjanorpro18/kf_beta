@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mon profil
+{% endblock %}
+
+{% block body %}
+
+    <div> Nom :</div>
+    <div> {{ app.user.email }}</div>
+    <div> Pseudonyme :</div>
+    <div> {{ app.user.pseudo }}</div>
+    <a href="{{  path ('user_profile_edit', {id: app.user.id})}}"> Modifier le profil</a>
+    <a href="{{  path ('reset_password', {id: app.user.id})}}"> Modifier le mot de passe</a>
+
+
+
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ProfileEditType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -99,4 +100,42 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     * Consulter son propre profil
+     * @Route ("/{id}/profile", name="user_profile", requirements={"id": "\d+"}, methods={"GET"})
+     */
+    public function profile($id, UserRepository $userRepository)
+    {
+        $user = $userRepository->find($id);
+        return $this->render('user/profile.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * Modifier son profil
+     * @Route ("/user/{id}/profile/edit", name="user_profile_edit", requirements={"id": "\d+"}, methods={"GET","POST"})
+     */
+    public function userProfileEdit(Request $request, $id, UserRepository $userRepository)
+    {
+        $user = $userRepository->find($id);
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileEditType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('message', 'Profil mis à jour');
+            return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
+        }
+        return $this->render('user/profileEdit.html.twig', [
+            'updateForm' => $form->createView()
+        ]);
+    }
+
 }

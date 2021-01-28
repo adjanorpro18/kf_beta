@@ -43,7 +43,12 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-        ;
+            ->add('isVerified', CheckboxType::class, [
+                'mapped' =>true,
+                'label' => 'confirm registration',
+                'required' => false,
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

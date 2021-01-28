@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Activity;
 use App\Entity\Comment;
 use App\Entity\Picture;
+use App\Entity\Profile;
 use App\Entity\State;
 use App\Entity\User;
 use App\Form\ActivityType;
@@ -31,8 +32,6 @@ class ActivityController extends AbstractController
         $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
         $activities = $activityRepository->TopTenRecentActivity();
 
-        //return $this->redirectToRoute('app_index');
-
 
         return $this->render('activity/index.html.twig', [
             'activities' => $activities
@@ -57,9 +56,9 @@ class ActivityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             //Pour recuperer les pictures transmises
-            $picture = $form->get('pictures')->getData();
+            $pictures = $form->get('pictures')->getData();
             //on boucle sur la picture
-           if ($picture) {
+           foreach ($pictures as $picture) {
                 $fichier = md5(uniqid()) . '.' . $picture->guessExtension(); // on genere un nom de fichier pour eviter des noms dupliqués
                 // On copie le fichier dans le dossier uploads
                 $picture->move(
@@ -75,7 +74,6 @@ class ActivityController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($activity);
             $entityManager->flush();
-               // die();
             return $this->redirectToRoute('activity_index');
         }
 
@@ -100,6 +98,15 @@ class ActivityController extends AbstractController
 
             $comment->setUser($this->getUser());//L'utilisateur du commentaire  est l'utilisateur  connecté
             $comment->setActivity($activity); //L'activité commenté  est celle que l'on affiche
+
+            //if($comment){
+             //   $comment->setComment($this->getDoctrine()->getRepository(Comment::class)->find($comment->getId()));//on recupere id du commentaire parent
+               // $comment->setActivity($comment->getComment()->getActivity()); // on recupèrel'activité du commentaire
+               // $entityManager =$this->getDoctrine()->getManager();
+               // $entityManager->persist($comment);
+           // }
+
+
 
 
             $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
@@ -130,11 +137,10 @@ class ActivityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             //Pour recuperer les pictures transmises
-            $picture = $form->get('pictures')->getData();
-            //on boucle sur les pictures
-            if ($picture) {
+            $pictures = $form->get('pictures')->getData();
+
+            foreach ($pictures as $picture) {
                 $fichier = md5(uniqid()) . '.' . $picture->guessExtension(); // on genere un nom de fichier pour eviter des noms dupliqués
                 // On copie le fichier dans le dossier uploads
                 $picture->move(
@@ -145,7 +151,7 @@ class ActivityController extends AbstractController
                 $img->setFilename($fichier);
                 $activity->addPicture($img);
 
-                }
+            }
 
                 $this->getDoctrine()->getManager()->flush();
 
@@ -175,7 +181,7 @@ class ActivityController extends AbstractController
 
     /**
      * Suppression des pictures
-     * @Route("/delete/picture/{id}", name="activity-picture_delete", methods={"DELETE"})
+     * @Route("/delete/picture/{id}", name="activity_picture_delete", methods={"DELETE"})
      */
     public function deletePicture(Picture $picture, Request $request){
         $data = json_decode($request->getContent(), true);

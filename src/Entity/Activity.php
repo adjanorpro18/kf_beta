@@ -43,7 +43,7 @@ class Activity
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="activity", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="activity", cascade={"persist", "remove"})
      */
     private $comments;
 
@@ -53,8 +53,8 @@ class Activity
     private $publics;
 
     /**
-
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="activity", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="activity", cascade={"persist","remove"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $pictures;
 
@@ -212,10 +212,12 @@ class Activity
     public function removePicture(Picture $picture): self
     {
         if ($this->pictures->contains($picture)) {
-            $this->images->removeElement($picture);
+            $this->removeElement($picture);
+
+            dump($activity);
             // set the owning side to null (unless already changed)
-            if ($picture->getAnnonces() === $this) {
-                $picture->setAnnonces(null);
+            if ($picture->getActivity() === $this) {
+                $picture->setActivity(null);
             }
         }
 
@@ -270,13 +272,12 @@ class Activity
     {
 
         $sum = 0;
-        $total = 0;
 
         foreach ($this->getComments() as $comment) {
             $sum += $comment->getMessage();
             $total++;
         }
-        return $total;
+        return $sum;
 
     }
 

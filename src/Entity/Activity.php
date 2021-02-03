@@ -53,16 +53,11 @@ class Activity
     private $publics;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="activity", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="activity", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $pictures;
 
-    /**
-     * @ORM\JoinColumn(nullable=false)
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="activities")
-     */
-    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeActivity::class, inversedBy="activities")
@@ -75,6 +70,12 @@ class Activity
      * @ORM\JoinColumn(nullable=false)
      */
     private $state;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="activities")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     public function __construct()
     {
@@ -224,23 +225,6 @@ class Activity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param mixed $category
-     */
-    public function setCategory($category): void
-    {
-        $this->category = $category;
-    }
-
-
 
     public function getTypeActivity(): ?TypeActivity
     {
@@ -284,5 +268,17 @@ class Activity
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }

@@ -3,43 +3,51 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
 
-    <table class="table">
-        <thead>
+    <div class=" jumbotron fluid p-3 m-3">
+        <h3 class="text-center m-2 p-2">Liste des ambassadeurs </h3>
+
+        <table class="table table-bordered table-sm text-center">
+            <thead>
             <tr>
                 <th>Id</th>
-                <th>Email</th>
+                <th>Profile</th>
                 <th>Roles</th>
                 <th>Validation</th>
                 <th>Pseudonyme</th>
-                <th>Profil</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-                <td>{{ user.profile.name }} {{ user.profile.icon }}</td>
-                <td>{{ user.pseudo }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}"><i
-                                class="far fa-eye m-2"></i></a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pen-square"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>
+                        {% if user.profile == 'Professionnel' %}
+                            <i class="fas fa-building mr"></i>   {{ user.profile }}
+                        {% else %}
+                            <i class="fas fa-user"></i>   {{ user.profile }}
+                        {% endif %}
+                    </td>
+                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    <td>{{ user.isVerified ? 'OUI' : 'NON' }}</td>
+                    <td>{{ user.pseudo }}</td>
+                    <td>
+                        <a href="{{ path('user_show', {'id': user.id}) }}"><i class="far fa-eye mr-2"></i></a>
+                        <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pen-square mr-2 "></i></a>
+                        {#  {%  if is_granted(" [ ROLE_ADMIN]") %} #}
+                        <a href="{{ path('user_new') }}"><i class="fas fa-plus-square"></i></a>
+                        {# {% endif %}#}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('user_new') }}" class="btn btn-md btn-outline-primary ml-3">
-        <i class="fas fa-plus-square"></i></a>
+    </div>
+
 {% endblock %}

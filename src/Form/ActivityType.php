@@ -43,7 +43,6 @@ class ActivityType extends AbstractType
                 },
             ])
 
-
             ->add('publics', EntityType::class,[
                 'class'=>Publics::class,
                 'label'=> 'Publics : ',
@@ -51,7 +50,6 @@ class ActivityType extends AbstractType
                 'multiple'=> true,
 
             ])
-
 
             ->add('typeActivity', EntityType::class,[
                 'class'=>TypeActivity::class,

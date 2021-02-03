@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block main %}
+    <div class="container p-4 m-4 ">
+        <h1>Nous contacter</h1>
+        <div>
+            {{ form_start (contactForm) }}
+            <div class="row">
+                <p class="col-md-3">Votre email</p>
+                <p class="col-md-3">{{ form_widget (contactForm.email) }}</p>
+            </div>
+            <div class="row">
+                <p class="col-md-3">Sujet</p>
+                <p class="col-md-3">{{ form_widget (contactForm.subject) }}</p>
+            </div>
+            <div class="row">
+                <p class="col-md-3">Votre message</p>
+                <p class="col-md-3">{{ form_widget (contactForm.message) }}</p>
+            </div>
+            <div class="d-none">
+                {{ form_widget (contactForm.information) }}
+            </div>
+            <button class="submit"> Envoyer</button>
+            {{ form_end (contactForm) }}
+        </div>
+
+    </div>
+{% endblock %}
+

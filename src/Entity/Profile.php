@@ -6,6 +6,7 @@ use App\Repository\ProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProfileRepository::class)
@@ -31,6 +32,7 @@ class Profile
     private $icon;
 
     /**
+     *  @Assert\Valid()
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="profile")
      */
     private $users;
@@ -98,5 +100,10 @@ class Profile
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->id;
     }
 }

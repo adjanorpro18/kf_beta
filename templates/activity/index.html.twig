@@ -3,110 +3,110 @@
 {% block title %} Kids & Family! {% endblock %}
 
 
-{% block body %}
+{% block main %}
 
-    <div class="container-fluid m-2 p-2 border-rounded">
-        <div class="row mb-4">
-            <div class="col-md-12">
 
+    <div class="container my-4">
+
+
+        <hr/>
+
+        <!--Carousel Wrapper-->
+        <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+
+            <!--Controls-->
+            <div class="controls-top">
+                <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+                <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fas fa-chevron-right"></i></a>
             </div>
-        </div>
-        <div class="row border-rounded p-3 m-3">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-2 border p-2 m-2">
-                        <div class="row justify-content-center p-1">
-                            <div class="col-md-12 mb-2">
-                                {% include 'activity/_filter.html.twig' %}
+            <!--/.Controls-->
+
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+                <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+                <li data-target="#multi-item-example" data-slide-to="1" ></li>
+            </ol>
+            <!--/.Indicators-->
+
+            <!--Slides-->
+
+            <div class="carousel-inner" role="listbox">
+
+                <!--First slide-->
+                {% for activity in activities %}
+                {% if loop.first %}
+                <div class="carousel-item active">
+                    <div class="col-md-3" style="float:left">
+                        <div class="card m-2 ">
+                            <div class="card-title mb-1 p-1">
+                                <h5 class="card-title d-flex justify-content-start mb-2"> {{ activity.name }}</h5>
+                                <h6 class="text-info d-flex justify-content-end">{{ activity.category.name }}</h6>
+                            </div>
+                            <div class="card-img">
+                                {% for picture in activity.pictures %}
+                                    <img class="card-img-top" src="{{ asset('/uploads/'~ picture.filename) }}"
+                                         alt="pictures" width="200" height="150">
+                                {% endfor %}
+                            </div>
+                            <div class="card-body">
+                                <div class="mt-2 d-flex justify-content-between align-items-baseline">
+                                    <small class="text-primary"><i
+                                                class="fas fa-flag"></i> {{ activity.comments.count }}</small>
+                                    <a href="{{ path('activity_show', { id: activity.id}) }}"><i
+                                                class="far fa-1x fa-eye m-1  btn-outline-success"></i></a>
+                                    <a href="#"><i
+                                                class="fas fa-apple-alt btn-outline-danger m-1"></i></a> {# compteur à mettre en place #}
+                                    <small class="text-center text-secondary">{{ activity.createdAt ? activity.createdAt|date('Y-m-d') }}</small>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <!--/.First slide-->
+
+                <!--Second slide-->
+                <div class="carousel-item ">
                     {% for activity in activities %}
-                    {% if not loop.last %}
-                    <div class="col-md-6 border p-2 m-2 overflow-x:scroll">
-                        <h5 class="text-center p-2"><i class="fas fa-pen-square mr-2"></i>Les Publications</h5>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                {% for picture in activity.pictures %}
-                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
-                                {% endfor %}
+                        {% if not loop.first %}
+                            <div class="col-md-3" style="float:left">
+                                <div class="card m-2 ">
+                                    <div class="card-title mb-1 p-1">
+                                        <h5 class="card-title d-flex justify-content-start mb-2">{{ activity.name }}</h5>
+                                        <h6 class="text-info d-flex justify-content-end">{{ activity.category.name }}</h6>
+                                    </div>
+                                    <div class="card-img">
+                                        {% for picture in activity.pictures %}
+                                            <img class="card-img-top" src="{{ asset('/uploads/'~ picture.filename) }}"
+                                                 alt="pictures" width="200" height="150">
+                                        {% endfor %}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mt-2 d-flex justify-content-between align-items-baseline">
+                                            <small class="text-primary"><i
+                                                        class="fas fa-flag"></i> {{ activity.comments.count }}</small>
+                                            <a href="{{ path('activity_show', { id: activity.id}) }}"><i
+                                                        class="far fa-1x fa-eye m-1  btn-outline-success"></i></a>
+                                            <a href="#"><i
+                                                        class="fas fa-apple-alt btn-outline-danger m-1"></i></a> {# compteur à mettre en place #}
+                                            <small class="text-center text-secondary">{{ activity.createdAt ? activity.createdAt|date('Y-m-d') }}</small>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                {% for picture in activity.pictures %}
-                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
-                                {% endfor %}
-                            </div>
-                            <div class="col-md-4">
-                                {% for picture in activity.pictures %}
-                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                {% for picture in activity.pictures %}
-                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
-                                {% endfor %}
-                            </div>
-                            <div class="col-md-4">
-                                {% for picture in activity.pictures %}
-                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
-                                {% endfor %}
-                            </div>
-                            <div class="col-md-4">
-                                {% for picture in activity.pictures %}
-                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 border m-2 p-2 overflow-x:scroll">
-                        <h5 class="text-center text-primary p-2"><i class="fas fa-heart mr-2"></i>A la une </h5>
-                        <div class="row mb-3 d-flex">
-                            <div class="col-md-12  ">
-                                {% for picture in activity.pictures %}
-                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                {% for picture in activity.pictures %}
-                                    <img src="{{ asset('/uploads/'~ picture.filename) }}" alt="pictures" class="img-thumbnail" />
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        <div class="row border">
-            <div class="col-md-12 ml-4 d-flex justify-content-around align-items-baseline">
-                {# liens de pied de page #}
-                    <h6 class="m-2 p-2"><a href="#" class="mr-2">Conditions d'utilisation</a> |  <a href="#">Politique de
-                            Confidentialité</a></h6>
 
-                <div class="float-left"> © Kids  &  Family 2021</div>
-                    <div>
-                        {% if  is_granted(['ROLE_AMBASSADOR','ROLE_ADMIN']) %}
-                            <a href="{{ path('activity_new') }}" class="btn btn-sm btn-outline-success "><i
-                                        class="fas fa-plus-square"></i></a>
                         {% endif %}
-                    </div>
-
-
-                    <div class="justify-content-space-between">
-                        <a href="#" class="btn btn-outline-warning"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="btn btn-outline-primary"><i class="fab fa-facebook-square"></i></a>
-                        <a href="#" class="btn btn-outline-danger"><i class="fab fa-youtube-square"></i></a>
-                    </div>
-
+                    {% endfor %}
                 </div>
-            </div>
-    </div>
+                <!--/.Second slide-->
 
+            </div>
+            <!--/.Slides-->
+
+        </div>
+        <!--/.Carousel Wrapper-->
+    </div>
 {% endblock %}
 
 

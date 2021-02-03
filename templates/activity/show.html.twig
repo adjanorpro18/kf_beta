@@ -2,14 +2,7 @@
 
 {% block title %}Activity{% endblock %}
 
-{% block body %}
-
-
-
-
-
-
-
+{% block main %}
     <div class="container  mt-5">
         <div class="row text-center">
             <div class="row justify-content-center align-items-baseline">
@@ -58,17 +51,22 @@
                                 <a href="{{ path('activity_index') }}"
                                    class="btn btn-outline-secondary"><i class="fas fa-arrow-circle-left"></i></a>
 
-                                {# Pour le bouton de modification des publications #}
-                                <a href="{{ path('activity_edit', {'id': activity.id}) }}"
-                                   class="btn btn-outline-warning"><i class="fas fa-pen-square"></i></a>
+                                {# Pour le bouton de modification des publications pour ambassadeur titulaire de l'activité #}
 
-                                {# Pour le bouton des commentaires #}
-
-                                <a href="#" class="btn btn-outline-primary" data-toggle="modal"
-                                   data-target="#exampleModal"><i class="fas fa-comments"></i></a>
+                                        <a href="{{ path('activity_edit', {'id': activity.id}) }}" class="btn btn-outline-warning"><i class="fas fa-pen-square"></i></a>
+                                    {# Pour le bouton des commentaires #}
+                                <div>
+                                        <a href="#" class="btn btn-outline-primary mr-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-comments"></i></a>
+                                        <a href="#" class="d-none btn btn-outline-primary mr-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-comments"></i></a>
+                                    {# Pour le compteur des commentaires #}
+                                        <small class="text-primary"> {{ activity.comments.count }}</small>
+                                </div>
 
                                 {# Pour le bouton j'aime #}
-                                <a href="#" class="btn btn-outline-danger"><i class="fas fa-heart"></i></a>
+                                <div>
+                                    <a href="#" class="btn btn-outline-danger"><i class="fas fa-apple-alt"></i></a>
+                                </div>
+
                             </div>
 
                             {# La partie commentaire avec option des sous commentaires #}
@@ -109,9 +107,8 @@
                                                 <div class="card mb-2">
                                                     <div class="card-header d-flex justify-content-between ">
                                                         <small>Rédigé par </small>
-                                                        {% if comment.user != app.user%}
+
                                                             <a herf="#" class="text-primary">{{comment.user.pseudo }}</a>
-                                                        {% endif %}
 
                                                     </div>
                                                     <div class="card-body">
@@ -119,18 +116,6 @@
                                                             {{ comment.message }}
                                                         {% endfor %}
 
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <form action="">
-                                                            <div class="form-group">
-                                                                <label for="">Message</label>
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Répondre à cet avis...">
-                                                            </div>
-                                                            <button class="btn btn-sm btn-primary float-right">
-                                                                Répondre
-                                                            </button>
-                                                        </form>
                                                     </div>
                                                 </div>
                                                 {% endfor %}

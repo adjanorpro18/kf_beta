@@ -2,13 +2,13 @@
 
 {% block title %}Edition d'activité{% endblock %}
 
-{% block body %}
+{% block main %}
         <div class="container">
             <h3>Modifier une activité</h3>
 
             {# Vérifier si la route est "annonces_edit" on affiche les images #}
             {% if app.request.attributes.get('_route') == 'activity_edit' %}
-                <h2>Image</h2>
+                <p>Image</p>
                 {% for picture in activity.pictures %}
                     <div>
                         <img src="{{ asset('/uploads/' ~ picture.filename) }}" alt="Image" width="150">

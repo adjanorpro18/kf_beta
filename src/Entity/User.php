@@ -54,6 +54,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="user", orphanRemoval=true)
+     *@ORM\JoinColumn(onDelete="CASCADE")
      */
     private $activities;
 
@@ -253,5 +254,9 @@ class User implements UserInterface
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->profile;
+    }
 
 }

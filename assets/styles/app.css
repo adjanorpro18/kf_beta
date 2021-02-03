@@ -1,5 +1,5 @@
 body {
-    background-color: lightcyan;
+    background-color: lightseagreen;
 
 }
 
@@ -35,4 +35,20 @@ body {
 .carousel-inner .carousel-item-right,
 .carousel-inner .carousel-item-left{
     transform: translateX(0);
+}
+
+
+.flash{
+    display:blcok;
+    padding: 20px;
+    font-weight: bold;
+    font-size: 24px;
+    color:white;
+}
+.flash-error{
+    background-color: red;
+}
+
+.flash-success{
+    background-color: green;
 }

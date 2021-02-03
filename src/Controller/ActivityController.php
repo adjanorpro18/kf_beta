@@ -25,6 +25,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ActivityController extends AbstractController
 {
+
+
     /**
      * Affiche la liste des activités
      * @Route("/", name="activity_index", methods={"GET"})
@@ -32,16 +34,20 @@ class ActivityController extends AbstractController
     public function index(ActivityRepository $activityRepository, Request $request): Response
 
     {
-        // fonction search bar pour faire la recherche
-        $data = new SearchData();
-        $form = $this ->createForm(SearchType::class, $data);
-        $form->handleRequest($request);
-
-        $activities = $activityRepository->findSearch($data);
+        //Afficher les dix dernières activités
 
         $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
         $activities = $activityRepository->TopTenRecentActivity();
 
+        // Pour faire la recherche selon les catégories, date et titre
+
+        $data = new SearchData();
+        $form = $this ->createForm(SearchType::class, $data);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+
+            $activities = $activityRepository->findSearch($data);
+        }
 
 
         return $this->render('activity/index.html.twig', [

@@ -33,7 +33,7 @@ class Picture
 
     /**
      * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="pictures", cascade={"remove"})
-     *
+     *@ORM\JoinColumn(onDelete="CASCADE")
      */
     private $activity;
 

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 
+use App\Entity\Icon;
 use App\Entity\Profile;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,7 +22,17 @@ class ProfileEditType extends AbstractType
                 'label' => 'Profile',
                 'choice_label' => 'name',
             ])
-            //->add('Valider', SubmitType::class)
+            ->add('icon', EntityType::class,[
+                'class'=> Icon::class,
+                'label' => 'Avatar',
+                'choice_label'=>'file'
+            ])
+
+            ->add('users', EntityType::class,[
+                'class'=> User::class,
+                'label' => 'Ambassadeur',
+            ])
+
         ;
     }
 

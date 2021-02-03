@@ -1,11 +1,9 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}
-    Modifier le profil
-{% endblock %}
-{% block body %}
-    <h1>Modification du profil de {{ app.user.username }}</h1>
+{% block title %}Modifier le profil{% endblock %}
+{% block main %}
+    <h1>Modification du profil de {{ app.user.pseudo }}</h1>
 
     {{ form_start (updateForm) }}
     {{ form_widget (updateForm) }}

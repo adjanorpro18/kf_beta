@@ -28,11 +28,11 @@ class UserType extends AbstractType
 
             ->add('profile', EntityType::class,[
                 'class' => Profile::class,
-                'label'=> 'Profil: ',
-                'placeholder' => 'Choisir un profil ',
+               'label'=> 'Profil: ',
+               'placeholder' => 'Choisir un profil ',
                 'choice_label'=> function($profile){
-                                 return $profile->getName();}
-                ])
+                return $profile->getName();}
+               ])
                 ;
 
     }

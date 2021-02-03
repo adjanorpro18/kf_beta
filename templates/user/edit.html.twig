@@ -2,23 +2,33 @@
 
 {% block title %}{% endblock %}
 
-{% block body %}
-    <div class="jumbotron fluid d-flex p-4 m-3 justify-content-start ">
+{% block main %}
+    <div class="jumbotron fluid p-4 m-3 justify-content-center ">
 
-        <h3 class="float-left">Modifier son compte</h3>
+        <div class="row mb-4 align-items-baseline">
+            <label class="col-md-4 "></label>
+            <i class="fas fa-user fa-4x text-primary justify-content-center "></i>
+            <h2 class="ml-3">Compte Ambassadeur {{ user.pseudo }}</h2>
+        </div>
+        <div class="col-md-12 justify-content-between m-0 p-1">
 
-        <div class="jumbotron fluid d-flex p-4 m-3 w-100 justify-content-start ">
-
-            <div class="col-md-12">
-                <div class="row mb-3">
-                    {{ include('user/_form.html.twig', {'button_class': 'Update'}) }}
-                    {{ include('user/_delete_form.html.twig') }}
-                </div>
-                <div class="row mb-3">
-                    <a href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i></a>
-                </div>
-
+            <div class="d-flex justify-content-center">
             </div>
+
+            <div class="d-row justify-content-between">
+                {{ include('user/_form.html.twig', {'button_class': 'Update'}) }}
+                {{ include('user/_delete_form.html.twig', {'button_class': 'Supprimer'}) }}
+                <a href="{{ path('app_index') }}" class="btn btn-secondary">Retour</a>
+            </div>
+
+            {% for label, messages in app.flashes(['success', 'warning', 'danger']) %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
         </div>
 
     </div>

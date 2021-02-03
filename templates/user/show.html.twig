@@ -2,17 +2,23 @@
 
 {% block title %}User{% endblock %}
 
-{% block body %}
+{% block main %}
 
     <div class="jumbotron justify-content-center p-4 m-4">
-        <h1>{{ user.pseudo }}</h1>
 
-        <table class="table">
+        <div class="row mb-4 align-items-baseline">
+            <label class="col-md-4 "></label>
+            {% if user.profile == 'Professionnel' %}
+                <i class="fas fa-building fa-4x text-primary justify-content-center "></i>
+            {% else %}
+                <i class="fas fa-user fa-4x text-primary justify-content-center "></i>
+            {% endif %}
+            <h2 class="ml-3">Compte Ambassadeur {{ user.pseudo }}</h2>
+        </div>
+
+        <table class="table text-center">
             <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
+
             <tr>
                 <th>Email</th>
                 <td>{{ user.email }}</td>
@@ -25,22 +31,28 @@
                 <th>Password</th>
                 <td>{{ user.password }}</td>
             </tr>
-            <tr>
-                <th>IsVerified</th>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-            </tr>
+
             <tr>
                 <th>Pseudo</th>
                 <td>{{ user.pseudo }}</td>
             </tr>
+            <tr>
+                <th>Nombre de publications :</th>
+                <td>{{ user.activities.count }}</td>
+            </tr>
+            <tr>
+                <th>Note des publications :</th>
+                <td>{# à ajouter la fonction de la moyenne des notes des activités #}</td>
+            </tr>
             </tbody>
         </table>
 
-        <div class=" justify-content-around">
-            <a href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i></a>
+        <hr>
 
-            <a href="{{ path('user_edit', {'id': user.id}) }}">Modifier</a>
+        <div class=" d-flex justify-content-around">
+            <a href="{{ path('user_index') }}" class="btn btn-secondary"><i class="fas fa-2x fa-backward"></i></a>
 
+            <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning" ><i class="fas fa-2x fa-pen-square"></i></a>
             {{ include('user/_delete_form.html.twig') }}
         </div>
 

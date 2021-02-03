@@ -34,8 +34,6 @@ class ActivityRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
-
-
     }
 
     /**

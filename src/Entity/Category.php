@@ -36,9 +36,11 @@ class Category
     private $typeActivities;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Activity::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="category", orphanRemoval=true)
      */
     private $activities;
+
+
 
     public function __construct()
     {
@@ -74,17 +76,6 @@ class Category
         return $this;
     }
 
-    public function getTypeActivities(): ?TypeActivity
-    {
-        return $this->typeActivities;
-    }
-
-    public function setTypeActivities(?TypeActivity $typeActivities): self
-    {
-        $this->typeActivities = $typeActivities;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Activity[]

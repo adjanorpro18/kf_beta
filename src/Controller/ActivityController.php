@@ -37,7 +37,7 @@ class ActivityController extends AbstractController
         //Afficher les dix dernières activités
 
         $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
-        $activities = $activityRepository->TopTenRecentActivity();
+        $activities = $activityRepository->TopTenRecentActivitiesPublished();
 
         // Pour faire la recherche selon les catégories, date et titre
 
@@ -65,7 +65,7 @@ class ActivityController extends AbstractController
         $activity = new Activity();
         $user = $this->getUser(); //recuperer l'utilisateur connecté
         $activity->setUser($user); //affecte à la creation d'activité
-        $state = $stateRepository->findOneBy(array('id'=> 8)); // la valeur de l'état en base selon son id
+        $state = $stateRepository->findOneBy(array('id'=> 4)); // la valeur de l'état en base selon son id
         $activity->setState($state);  //etat de l'activité une fois créée
 
         $form = $this->createForm(ActivityType::class, $activity);
@@ -76,7 +76,7 @@ class ActivityController extends AbstractController
             //Pour recuperer les pictures transmises
             $pictures = $form->get('pictures')->getData();
             //on boucle sur la picture
-           foreach ($pictures as $picture) {
+            foreach ($pictures as $picture) {
                 $fichier = md5(uniqid()) . '.' . $picture->guessExtension(); // on genere un nom de fichier pour eviter des noms dupliqués
                 // On copie le fichier dans le dossier uploads
                 $picture->move(
@@ -92,6 +92,8 @@ class ActivityController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($activity);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Votre activité a été bien créée et en attente de validation !');
             return $this->redirectToRoute('activity_index');
         }
 
@@ -104,10 +106,9 @@ class ActivityController extends AbstractController
     /**
      * @Route("/{id}", name="activity_show", methods={"GET", "POST"})
      */
-    public function show(Activity $activity, Request $request): Response
+    public function show(Activity $activity, Request $request, UserRepository $userRepository): Response
     {
         //injecter la page des commentaires dans la visualisation des activités
-
         $comment = new Comment();
         $comment->setValidate(true);
         $formComment = $this->createForm(CommentType::class, $comment);
@@ -117,26 +118,21 @@ class ActivityController extends AbstractController
             $comment->setUser($this->getUser());//L'utilisateur du commentaire  est l'utilisateur  connecté
             $comment->setActivity($activity); //L'activité commenté  est celle que l'on affiche
 
-            //if($comment){
-             //   $comment->setComment($this->getDoctrine()->getRepository(Comment::class)->find($comment->getId()));//on recupere id du commentaire parent
-               // $comment->setActivity($comment->getComment()->getActivity()); // on recupèrel'activité du commentaire
-               // $entityManager =$this->getDoctrine()->getManager();
-               // $entityManager->persist($comment);
-           // }
+            if($this->getUser() != null){
+                $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
+                // $activity = $activityRepository->find($id);
 
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($comment);
+                $entityManager->flush();
 
+                return $this->redirectToRoute('activity_show', ['id' => $activity->getId()]);
 
+                $formComment = $formComment->getData();
+            }else{
 
-            $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
-           // $activity = $activityRepository->find($id);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($comment);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('activity_show', ['id' => $activity->getId()]);
-
-            $formComment = $formComment->getData();
+                $this->addFlash('warning', 'Merci de bien vouloir se connecter pour poster un commentaire sur cette activité');
+            }
 
         }
 
@@ -151,7 +147,9 @@ class ActivityController extends AbstractController
      */
     public function edit(Request $request, Activity $activity): Response
     {
+
         $form = $this->createForm(ActivityType::class, $activity);
+        $activity->setUser($this->getUser());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -171,10 +169,10 @@ class ActivityController extends AbstractController
 
             }
 
-                $this->getDoctrine()->getManager()->flush();
+            $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('activity_index');
-            }
+            return $this->redirectToRoute('activity_index');
+        }
 
         return $this->render('activity/edit.html.twig', [
             'activity' => $activity,

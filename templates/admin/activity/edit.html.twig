@@ -1,0 +1,42 @@
+{% extends '@EasyAdmin/default/edit.html.twig' %}
+
+{% block main %}
+
+<div class="container">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col-sm-4">Titre</div>
+                <div class="col-sm-4">{{ form_widget(form.name) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Description</div>
+                <textarea class="col-sm-4"> {{ form_widget(form.description|raw) }}</textarea>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Categorie</div>
+                <div class="col-sm-4"> {{ form_widget(form.category) }}</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col-sm-4">Publics</div>
+                <div class="col-sm-4">{{ form_widget(form.publics) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Type_Activite</div>
+                <div class="col-sm-4"> {{ form_widget(form.typeActivity) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Pictures</div>
+                <div class="col-sm-4"> {{ form_widget(form.pictures) }}</div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+</div>
+
+
+{% endblock %}

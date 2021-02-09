@@ -85,7 +85,7 @@ class UserController extends AbstractController
             $user->setPassword($hashed);
             $this->getDoctrine()->getManager()->flush();
 
-           $this->addFlash('success', 'Votre profil a bien été mis à jour !');
+            $this->addFlash('success', 'Votre profil a bien été mis à jour !');
             return $this->redirectToRoute('app_index');
         }
 

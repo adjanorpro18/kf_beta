@@ -1,7 +1,10 @@
 
+@import "_variables.css";
+
 body {
     font-family: 'Oswald', sans-serif !important;
-    background-color: bisque;
+    background-color: #81ecec;
+    box-shadow: #5eb5e0;
 }
 
 .jumbotron {
@@ -51,4 +54,19 @@ footer p {
     .bd-placeholder-img-lg {
         font-size: 3.5rem;
     }
+}
+
+.flash-warning{
+    color: white;
+    background-color: #f1c40f;
+}
+
+.flash-danger{
+    color: white;
+    background-color: #962744;
+}
+
+.flash-success{
+    color: white;
+    background-color: #1ea471;
 }

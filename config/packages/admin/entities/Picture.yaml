@@ -1,0 +1,14 @@
+easy_admin:
+  entities:
+    Picture:
+      class: App\Entity\Picture
+      list:
+          fields:
+            - id
+            - { property: 'filename' , label: 'Image' }
+            - { property: 'category', label: 'Categorie' }
+            - { property: 'activity', label: "Activite" }
+
+      actions:
+          - { name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-warning'}
+          - { name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}

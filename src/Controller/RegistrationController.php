@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 
 class RegistrationController extends AbstractController
@@ -67,7 +67,7 @@ class RegistrationController extends AbstractController
                     ->from(new Address('stage.symfony2021@gmail.com', 'Stage Mail Bot'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                   ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
 

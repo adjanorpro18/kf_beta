@@ -171,6 +171,6 @@ class Comment
 
     public function __toString()
     {
-        return $this->comment;
+        return $this->message;
     }
 }

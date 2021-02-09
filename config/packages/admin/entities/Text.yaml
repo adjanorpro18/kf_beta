@@ -1,0 +1,19 @@
+easy_admin:
+  entities:
+    Text:
+      class: App\Entity\Text
+      list:
+        fields:
+          - id
+          - { property: 'libelle' , type: 'text', label: 'Libelle' }
+          - { property: 'contenu' , type: 'fos_ckeditor' }
+      form:
+        fields:
+          - { property: 'libelle' , type: 'text', label: 'Libelle' }
+          - { property: 'contenu' , type: 'fos_ckeditor' }
+
+      actions:
+        - { name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-warning' }
+        - { name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger' }
+
+

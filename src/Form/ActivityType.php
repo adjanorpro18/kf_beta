@@ -15,11 +15,12 @@ use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
+
 
 class ActivityType extends AbstractType
 {
@@ -28,7 +29,7 @@ class ActivityType extends AbstractType
         $builder
 
             ->add('name', TextType::class,[
-                'label'=> "Nom de l'activité"
+                'label'=> "Titre"
             ])
             ->add('description', CKEditorType::class,[
                 'label'=> 'Description : '
@@ -57,6 +58,7 @@ class ActivityType extends AbstractType
                 'placeholder' => 'Choisir un type de l\'activité',
                 'label'=>'Type d\'Activité :'
             ])
+
 
             ->add('pictures', FileType::class, [
                 'label' => 'Image',

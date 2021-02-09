@@ -22,7 +22,7 @@ class Activity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
@@ -250,21 +250,6 @@ class Activity
         return $this;
     }
 
-    //rajout de la fonction de compteur pour les commentaires
-
-    public function iscountMessage(): float
-    {
-
-        $sum = 0;
-
-        foreach ($this->getComments() as $comment) {
-            $sum += $comment->getMessage();
-            $total++;
-        }
-        return $sum;
-
-    }
-
     public function __toString()
     {
         return $this->name;
@@ -281,4 +266,5 @@ class Activity
 
         return $this;
     }
+
 }

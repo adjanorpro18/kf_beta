@@ -3,6 +3,7 @@
 {% block title %}Liste des Activites{% endblock %}
 
 {% block main %}
+
     <div class="container text-center my-3">
         <h2 class="font-weight-light">Publications à la une</h2>
         {% for activity in activities %}
@@ -37,7 +38,7 @@
                         </div>
                         {% endif %}
                     </div>
-                    {% if not loop.last %}
+                    {% if not loop.first %}
                     <div class="carousel-item">
                         <div class="col-md-4 p-3">
                             <div class="card card-body">
@@ -65,60 +66,6 @@
                         </div>
                     </div>
                     {% endif %}
-                    {% if not loop.last %}
-                        <div class="carousel-item">
-                            <div class="col-md-4 p-3">
-                                <div class="card card-body">
-                                    <div>
-                                        <p class="mb-2">{{ activity.name }}</p>
-                                        {% for pictures in activity.pictures %}
-                                            <img src="{{ asset('/uploads/pictures/'~ pictures.filename) }}"
-                                                 alt="pictures" width="100%" class="mb-2">
-                                        {% endfor %}
-                                        <br>
-                                        <div class="mt-2 d-flex justify-content-around ">
-                                            <p>
-                                                {% for category in activity.category %}
-                                                    <small>Categorie: {{ category.name }} </small>
-                                                {% endfor %}
-                                            </p>
-                                            <p>
-                                                <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
-                                            </p>
-                                            <small>{{ activity.comments.count }}</small>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                    <div class="carousel-item">
-                        <div class="col-md-4 p-3">
-                            <div class="card card-body">
-                                <div>
-                                    <p class="mb-2">{{ activity.name }}</p>
-                                    {% for pictures in activity.pictures %}
-                                        <img src="{{ asset('/uploads/pictures/'~ pictures.filename) }}"
-                                             alt="pictures" width="100%" class="mb-2">
-                                    {% endfor %}
-                                    <br>
-                                    <div class="mt-2 d-flex justify-content-around ">
-                                        <p>
-                                            {% for category in activity.category %}
-                                                <small>Categorie: {{ category.name }} </small>
-                                            {% endfor %}
-                                        </p>
-                                        <p>
-                                            <small><a href="{{ path('activity_show', { id: activity.id}) }}">Voir</a></small>
-                                        </p>
-                                        {#  <small>{{ activity.comments.count }}</small> #}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle p-2"

@@ -23,34 +23,34 @@ class ContactController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid() ){
             //ContactType::HONEYPOT_FIELD=>$honeyPot = $form->getData();
-          $form->getData(ContactType::HONEY_FIELD);
-             if(!empty($honeyPot)){
+            $form->getData(ContactType::HONEY_FIELDFIELD);
+            if(!empty($honeyPot)){
 
                 $contact = $form->getData();
 
-            // On instancie le Mailer
-            $email = (new Email())
-                //  On attribue l'expéditeur
-                ->from($contact['email'])
-                // On attribue le destinataire
-                ->to('stage.symfony2021@gmail.com')
-                // On crée le contenue du message avec la vue Twig
-                ->subject($contact['subject'])
-                ->html(
-                    $this->renderView(
-                        'emails/contact.html.twig', compact('contact')
-                    ),
-                    'text/html'
-                );
+                // On instancie le Mailer
+                $email = (new Email())
+                    //  On attribue l'expéditeur
+                    ->from($contact['email'])
+                    // On attribue le destinataire
+                    ->to('stage.symfony2021@gmail.com')
+                    // On crée le contenue du message avec la vue Twig
+                    ->subject($contact['subject'])
+                    ->html(
+                        $this->renderView(
+                            'emails/contact.html.twig', compact('contact')
+                        ),
+                        'text/html'
+                    );
 
-            // on envoie le message
-            $mailer->send($email);
-            $this->addFlash('success', 'Le message a bien été envoyé');
-            return $this->redirectToRoute('app_index');
-             }
-             else{
-                 $this->addFlash('warning', 'Merci de bien vouloir utiliser un email correct !');
-             }
+                // on envoie le message
+                $mailer->send($email);
+                $this->addFlash('success', 'Le message a bien été envoyé');
+                return $this->redirectToRoute('app_index');
+            }
+            else{
+                $this->addFlash('warning', 'Merci de bien vouloir utiliser un email correct !');
+            }
 
         }
 

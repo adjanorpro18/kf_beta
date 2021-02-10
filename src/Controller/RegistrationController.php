@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 
 class RegistrationController extends AbstractController
@@ -49,11 +49,11 @@ class RegistrationController extends AbstractController
 
 
             // On vérifie si l'utilisateur est un bot (Si is_verified = 1 alors c'est un bot)
-            if($user->isVerified() == false) {
-                $this->addFlash('message', 'Merci de bien vouloir réessayer votre inscription');
-                return $this->redirectToRoute("app_register");
+            //if($user->isVerified() == false) {
+              //  $this->addFlash('message', 'Merci de bien vouloir réessayer votre inscription');
+                //return $this->redirectToRoute("app_register");
 
-            }
+            //}
 
 
 
@@ -71,7 +71,7 @@ class RegistrationController extends AbstractController
             );
 
 
-
+            $this->addFlash('success', 'Un email de confirmation vous a été envoyé');
             return $this->redirectToRoute('app_index');
         }
 

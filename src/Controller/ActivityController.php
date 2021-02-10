@@ -65,7 +65,7 @@ class ActivityController extends AbstractController
         $activity = new Activity();
         $user = $this->getUser(); //recuperer l'utilisateur connecté
         $activity->setUser($user); //affecte à la creation d'activité
-        $state = $stateRepository->findOneBy(array('id'=> 8)); // la valeur de l'état en base selon son id
+        $state = $stateRepository->findOneBy(array('id'=> 1)); // la valeur de l'état en base selon son id
         $activity->setState($state);  //etat de l'activité une fois créée
 
         $form = $this->createForm(ActivityType::class, $activity);

@@ -38,7 +38,7 @@ class Activity
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="activities", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;
 

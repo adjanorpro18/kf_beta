@@ -61,7 +61,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isVerified = true;
+    private $isVerified = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=Profile::class, inversedBy="users")

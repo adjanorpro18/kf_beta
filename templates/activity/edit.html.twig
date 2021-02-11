@@ -18,10 +18,9 @@
             {% endif %}
 
             {{ include('activity/_form.html.twig', {'button_label': 'Modifier', 'button_class' : "btn-outline-warning"}) }}
-
-            <a href="{{ path('activity_index') }}" class="btn btn-sm btn-outline-secondary float-right">Retour</a>
-
             {{ include('activity/_delete_form.html.twig') }}
+            <a href="{{ path('activity_index') }}" class="btn btn-lg btn-primary m-2" type="submit">Retour</a>
+
         </div>
 {% endblock %}
 

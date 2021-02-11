@@ -1,0 +1,14 @@
+
+:root {
+    font-family: 'Oswald', sans-serif;
+
+    --kids: #81ecec;
+    --familiar: #55efc4;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+    --text: #636e72;
+    --hint:#2d3436;
+    --background:#dfe6e9;
+    --font-family:var(--font-family);
+
+}

@@ -16,22 +16,22 @@ class PictureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           //->add('filename', FileType::class, [
-               //'label' => 'Image',
-                //'mapped' => false,
-                //'required' => false,
-                //'constraints' => [
-                    //new File([
-                        //'maxSize' => '1024k',
-                        //'mimeTypes' => [
-                            //'image/jpeg',
-                            //'image/gif',
-                          //  'image/png',
-                        //],
-                       // 'mimeTypesMessage' => 'Vous devez uploader un format d\'image valide.',
-                   // ])
-                //],
-           // ])
+           ->add('filename', FileType::class, [
+               'label' => 'Image',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                           'image/jpeg',
+                           'image/gif',
+                           'image/png',
+                       ],
+                       'mimeTypesMessage' => 'Vous devez uploader un format d\'image valide.',
+                   ])
+                ],
+           ])
         ;
     }
 

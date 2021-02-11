@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block main %}
-    <div class="jumbotron fluid p-4 m-3 justify-content-center ">
+    <div class="container">
 
         <div class="row mb-4 align-items-baseline">
             <label class="col-md-4 "></label>
@@ -18,7 +18,7 @@
             <div class="d-row justify-content-between">
                 {{ include('user/_form.html.twig', {'button_class': 'Update'}) }}
                 {{ include('user/_delete_form.html.twig', {'button_class': 'Supprimer'}) }}
-                <a href="{{ path('app_index') }}" class="btn btn-secondary">Retour</a>
+                <a href="{{ path('app_index') }}" class="btn btn-lg btn-primary">Retour</a>
             </div>
 
             {% for label, messages in app.flashes(['success', 'warning', 'danger']) %}

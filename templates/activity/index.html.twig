@@ -2,112 +2,83 @@
 
 {% block title %} Kids & Family! {% endblock %}
 
-
 {% block main %}
-
-
-    <div class="container my-4">
-
-
-        <hr/>
-
-        <!--Carousel Wrapper-->
-        <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-            <!--Controls-->
-            <div class="controls-top">
-                <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-                <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fas fa-chevron-right"></i></a>
-            </div>
-            <!--/.Controls-->
-
-            <!--Indicators-->
-            <ol class="carousel-indicators">
-                <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-                <li data-target="#multi-item-example" data-slide-to="1" ></li>
-            </ol>
-            <!--/.Indicators-->
-
-            <!--Slides-->
-
-            <div class="carousel-inner" role="listbox">
-
-                <!--First slide-->
-                {% for activity in activities %}
-                {% if loop.first %}
-                <div class="carousel-item active">
-                    <div class="col-md-3" style="float:left">
-                        <div class="card m-2 ">
-                            <div class="card-title mb-1 p-1">
-                                <h5 class="card-title d-flex justify-content-start mb-2"> {{ activity.name }}</h5>
-                                <h6 class="text-info d-flex justify-content-end">{{ activity.category.name }}</h6>
-                            </div>
-                            <div class="card-img">
-                                {% for picture in activity.pictures %}
-                                    <img class="card-img-top" src="{{ asset('/uploads/'~ picture.filename) }}"
-                                         alt="pictures" width="200" height="150">
-                                {% endfor %}
-                            </div>
-                            <div class="card-body">
-                                <div class="mt-2 d-flex justify-content-between align-items-baseline">
-                                    <small class="text-primary"><i
-                                                class="fas fa-flag"></i> {{ activity.comments.count }}</small>
-                                    <a href="{{ path('activity_show', { id: activity.id}) }}"><i
-                                                class="far fa-1x fa-eye m-1  btn-outline-success"></i></a>
-                                    <a href="#"><i
-                                                class="fas fa-apple-alt btn-outline-danger m-1"></i></a> {# compteur à mettre en place #}
-                                    <small class="text-center text-secondary">{{ activity.createdAt ? activity.createdAt|date('Y-m-d') }}</small>
-                                </div>
-                            </div>
-                        </div>
+    <div class="container-fluid p-2 m-2">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center mb-3">
+                    <i class="fas fa-pen-square"></i> Les publications
+                </h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'activity/_filter.html.twig' %}
                     </div>
-                    {% endif %}
-                    {% endfor %}
                 </div>
-                <!--/.First slide-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            {% for activity in activities %}
+                                {% if loop.first %}
+                                    <div class="col-md-3">
+                                        <div class="card m-2 shadow-sm">
+                                            <div class="card-title mb-1 p-1">
+                                                <h5 class="card-title d-flex justify-content-start mb-2">{{ activity.name }}</h5>
+                                                <h6 class="badge badge-primary p-1  d-flex justify-content-end">{{ activity.category.name }}</h6>
+                                            </div>
+                                            <div class="card-img">
+                                                {% for picture in activity.pictures %}
+                                                    <img class="card-img-top" src="{{ asset('/uploads/'~ picture.filename) }}"
+                                                         alt="pictures" width="100%" height="225">
+                                                {% endfor %}
 
-                <!--Second slide-->
-                <div class="carousel-item ">
-                    {% for activity in activities %}
-                        {% if not loop.first %}
-                            <div class="col-md-3" style="float:left">
-                                <div class="card m-2 ">
-                                    <div class="card-title mb-1 p-1">
-                                        <h5 class="card-title d-flex justify-content-start mb-2">{{ activity.name }}</h5>
-                                        <h6 class="text-info d-flex justify-content-end">{{ activity.category.name }}</h6>
-                                    </div>
-                                    <div class="card-img">
-                                        {% for picture in activity.pictures %}
-                                            <img class="card-img-top" src="{{ asset('/uploads/'~ picture.filename) }}"
-                                                 alt="pictures" width="200" height="150">
-                                        {% endfor %}
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mt-2 d-flex justify-content-between align-items-baseline">
-                                            <small class="text-primary"><i
-                                                        class="fas fa-flag"></i> {{ activity.comments.count }}</small>
-                                            <a href="{{ path('activity_show', { id: activity.id}) }}"><i
-                                                        class="far fa-1x fa-eye m-1  btn-outline-success"></i></a>
-                                            <a href="#"><i
-                                                        class="fas fa-apple-alt btn-outline-danger m-1"></i></a> {# compteur à mettre en place #}
-                                            <small class="text-center text-secondary">{{ activity.createdAt ? activity.createdAt|date('Y-m-d') }}</small>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="mt-2 d-flex justify-content-between align-items-baseline">
+                                                    <small class="text-primary"><i
+                                                                class="fas fa-flag"></i> {{ activity.comments.count }}</small>
+                                                    <a href="{{ path('activity_show', { id: activity.id}) }}"><i
+                                                                class="far fa-1x fa-eye m-1  btn-outline-success"></i></a>
+                                                    <a href="#"><i
+                                                                class="fas fa-apple-alt btn-outline-danger m-1"></i></a> {# compteur à mettre en place #}
+                                                    <small class="text-center text-secondary">{{ activity.createdAt ? activity.createdAt|date('Y-m-d') }}</small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                        {% endif %}
-                    {% endfor %}
+                                {% endif %}
+                                {% if not loop.first %}
+                                    <div class="col-md-3">
+                                        <div class="card m-2 shadow-sm">
+                                            <div class="card-title mb-1 p-1">
+                                                <h5 class="card-title d-flex justify-content-start mb-2">{{ activity.name }}</h5>
+                                                <h6 class="badge badge-primary p-1  d-flex justify-content-end">{{ activity.category.name }}</h6>
+                                            </div>
+                                            <div class="card-img">
+                                                {% for picture in activity.pictures %}
+                                                    <img class="card-img-top" src="{{ asset('/uploads/'~ picture.filename) }}"
+                                                         alt="pictures" width="100%" height="225">
+                                                {% endfor %}
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="mt-2 d-flex justify-content-between align-items-baseline">
+                                                    <small class="text-primary"><i
+                                                                class="fas fa-flag"></i> {{ activity.comments.count }}</small>
+                                                    <a href="{{ path('activity_show', { id: activity.id}) }}"><i
+                                                                class="far fa-1x fa-eye m-1  btn-outline-success"></i></a>
+                                                    <a href="#"><i
+                                                                class="fas fa-apple-alt btn-outline-danger m-1"></i></a> {# compteur à mettre en place #}
+                                                    <small class="text-center text-secondary">{{ activity.createdAt ? activity.createdAt|date('Y-m-d') }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
-                <!--/.Second slide-->
-
             </div>
-            <!--/.Slides-->
-
         </div>
-        <!--/.Carousel Wrapper-->
     </div>
+
 {% endblock %}
-
-
-

@@ -1,0 +1,8 @@
+easy_admin:
+  entities:
+    TypeActivity:
+      class: App\Entity\TypeActivity
+      list:
+        actions:
+          - { name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-warning'}
+          - { name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger'}

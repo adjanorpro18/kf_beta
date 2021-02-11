@@ -1,20 +1,26 @@
 <div class="container">
     {{ form_start (form) }}
-    <div class="mb-5">
-        <h6 class="mb-2">Recherche</h6>
-        {{ form_widget(form.q) }}
-    </div>
-    <div class="mb-5">
-        <h6 class="mb-2">Catégories</h6>
-        {{ form_widget(form.categories) }}
-    </div>
+    <div class="row p-5 mb-5 align-baseline">
 
-    <div class="mb-5">
-        <h6 class="mb-2"> Date minimum</h6>
-        {{ form_widget(form.min) }}
+        <div class="col-md-3">
+            <h6 class="mb-2">Mots clés</h6>
+            {{ form_widget(form.q) }}
+        </div>
+        <div class="col-md-3">
+            <h6 class="mb-2">Catégories</h6>
+            {{ form_widget(form.categories) }}
+        </div>
+
+        <div class="col-md-3">
+            <h6 class="mb-2"> Choisir une date </h6>
+            {{ form_widget(form.min) }}
+        </div>
+
+        <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100 mt-4"> Rechercher</button>
+        </div>
+
+
     </div>
-
-    <button type="submit" class="btn btn-primary w-100 mt-3"> Filtrer</button>
-
     {{ form_end (form) }}
 </div>

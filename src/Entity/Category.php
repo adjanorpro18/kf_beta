@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
@@ -108,4 +109,22 @@ class Category
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTypeActivities()
+    {
+        return $this->typeActivities;
+    }
+
+    /**
+     * @param mixed $typeActivities
+     */
+    public function setTypeActivities($typeActivities): void
+    {
+        $this->typeActivities = $typeActivities;
+    }
+
+
 }

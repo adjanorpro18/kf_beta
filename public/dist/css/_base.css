@@ -1,0 +1,42 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text);
+    font-size: 1.6rem;
+    background: var(--background);
+}
+
+p {
+    margin: 1rem 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin:1rem 0 2rem 0;
+    text-transform: uppercase;
+    text-align:center;
+    font-weight: bold;
+}
+
+ul {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+
+
+.red-divider
+{
+    width:100px;
+    height:2px;
+    margin:0 auto;
+    color:var(--text);
+}

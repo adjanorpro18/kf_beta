@@ -1,0 +1,32 @@
+easy_admin:
+  entities:
+    Activity:
+      class: App\Entity\Activity
+      #templates:
+        #edit: 'admin/activity/edit.html.twig'
+      list:
+        fields:
+          - id
+          - {property: 'name' , type: 'text', label: 'Titre'}
+          - {property: 'category', label: 'Categorie'}
+          - {property: 'publics', label: 'Publics'}
+          - {property: 'typeActivity', label: "Type d'activité"}
+          - {property: 'user', label: "Utilisateur"}
+          - {property: 'pictures', label: 'Image'}
+          - {property: 'state', label: "Etat"}
+
+      form:
+        fields:
+          - {property: 'name' , type: 'text', label: 'Titre'}
+          - { property: 'description' , type: 'fos_ckeditor' }
+          - {property: 'category', label: 'Categorie'}
+          - {property: 'typeActivity', label: "Type d'activité"}
+          - {property: 'publics', label: 'Publics'}
+          - {property: 'pictures', label: "Images"}
+          - {property: 'state', label: "Etat"}
+
+      actions:
+        - { name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-warning' }
+        - { name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger' }
+
+

@@ -52,8 +52,14 @@
                                    class="btn btn-outline-secondary"><i class="fas fa-arrow-circle-left"></i></a>
 
                                 {# Pour le bouton de modification des publications pour ambassadeur titulaire de l'activité #}
+                                {% if app.user == null %}
+                                        <a href="{{ path('activity_edit', {'id': activity.id}) }}" class=" d-none btn btn-outline-warning"><i class="fas fa-pen-square"></i></a>
+                                {% elseif activity.user.id is same as (app.user.id) %}
+                                    <a href="{{ path('activity_edit', {'id': activity.id}) }}" class="btn btn-outline-warning"><i class="fas fa-pen-square"></i></a>
+                                {% else %}
+                                    <a href="{{ path('activity_edit', {'id': activity.id}) }}" class=" d-none btn btn-outline-warning"><i class="fas fa-pen-square d-none"></i></a>
+                                {% endif %}
 
-                                        <a href="{{ path('activity_edit', {'id': activity.id}) }}" class="btn btn-outline-warning"><i class="fas fa-pen-square"></i></a>
                                     {# Pour le bouton des commentaires #}
                                 <div>
                                         <a href="#" class="btn btn-outline-primary mr-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-comments"></i></a>

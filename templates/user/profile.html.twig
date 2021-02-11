@@ -3,39 +3,42 @@
 {% block title %}Mon profil{% endblock %}
 
 {% block main %}
-    <div class="jumbotron p-4 m-4 justify-content-center">
-        <div class="row mb-4 align-items-baseline">
-            <label class="col-md-4 "></label>
-             <i class="fas fa-user fa-4x text-primary justify-content-center "></i>
-            {# {% if app.user.profile ==  'Professionnel' %}
+    <div class="container">
+
+        <div class="row mb-2 align-items-baseline">
+                <label class="col-md-4 "></label>
+                <i class="fas fa-user fa-4x text-primary justify-content-center "></i>
+                {# {% if app.user.profile ==  'Professionnel' %}
                 <i class="fas fa-2x fa-building"></i>
             {% elseif app.user.profile ==  'Particulier'  %}
                 <i class="fas fa-2x fa-user"></i>
-            {% endif %}#}
-            <h2 class="ml-3">Fiche du profil Ambassadeur</h2>
-        </div>
-        <div class="row">
-            <label class="col-md-4 offset-md-2">Pseudonyme</label>
-            {{ user.pseudo }}
-        </div>
-        <div class="row">
-            <label class="col-md-4 offset-md-2">Email</label>
-            {{ user.email }}
-        </div>
-        <div class="row">
-            <label class="col-md-4 offset-md-2">Nombre de publications :</label>
-            {{ user.activities.count }}
-        </div>
-        <div class="row">
-            <label class="col-md-4 offset-md-2">Notes des publications :</label>
-            {# à ajouter la fonction de la moyenne des notes des activités #}
-        </div>
+            {% endif %} #}
+                <h2 class="ml-3">Fiche du profil Ambassadeur</h2>
+            </div>
+            <div class="row">
+                <label class="col-md-4 offset-md-2">Pseudonyme</label>
+                {{ user.pseudo }}
+            </div>
+            <div class="row">
+                <label class="col-md-4 offset-md-2">Email</label>
+                {{ user.email }}
+            </div>
+            <div class="row">
+                <label class="col-md-4 offset-md-2">Nombre de publications :</label>
+                {{ user.activities.count }}
+            </div>
+            <div class="row">
+                <label class="col-md-4 offset-md-2">Notes des publications :</label>
+                {# à ajouter la fonction de la moyenne des notes des activités #}
+            </div>
 
-        <div class="row m-4 justify-content-center ">
-            <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-outline-warning mr-2" >Modifier son compte</a>
+            <div class="row m-4 justify-content-center ">
+                <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-lg btn-primary">Modifier son
+                    compte</a>
+
+            </div>
 
         </div>
-
     </div>
 
 {% endblock %}

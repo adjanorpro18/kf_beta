@@ -25,10 +25,13 @@ class ActivityRepository extends ServiceEntityRepository
      * @return Activity
      */
 
-    public function TopTenRecentActivity()
+    public function TopTenRecentActivitiesPublished()
     {
         return $this->createQueryBuilder('a')
-            ->orderBy('a.createdAt', 'DESC')
+           ->addSelect('s')
+           ->innerJoin('a.state', 's')
+           ->andWhere('s.id = 2')
+           ->orderBy('a.createdAt', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()

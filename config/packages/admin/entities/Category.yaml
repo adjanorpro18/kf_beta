@@ -1,0 +1,15 @@
+easy_admin:
+  entities:
+    Category:
+      class: App\Entity\Category
+      list:
+        list:
+          fields:
+            - { property: 'name', label: 'Categorie' }
+            - { property: 'activities', label: "Activité" }
+            - { property: 'typeActivities', label: "Type d'activité" }
+            - { property: 'pictures', label: "Image" }
+
+        actions:
+          - { name: 'edit', icon: 'pencil', label: false, css_class: 'btn btn-warning' }
+          - { name: 'delete', icon: 'trash', label: false, css_class: 'btn btn-danger' }

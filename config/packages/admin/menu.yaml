@@ -1,0 +1,25 @@
+easy_admin:
+  design:
+    # Ces lignes sont utiles pour CKEditor
+    form_theme:
+      - "@EasyAdmin/form/bootstrap_4.html.twig"
+      - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
+    menu:
+      - label: 'BLOG'
+        icon: 'newspaper-o'
+        children:
+
+          - { entity: 'Activity', icon: 'chart-line', label: 'Activité'  }
+          - { entity: 'Category', icon: 'tags', label: 'Categorie'}
+          - { entity: 'Comment', icon: 'comment', label: 'Commentaire' }
+          - { entity: 'User', icon: 'user', label: 'Utilisateurs'}
+          - { entity: 'Publics', icon: 'people-carry', label: 'Publics' }
+          - { entity: 'Picture', icon: 'images', label: 'Image' }
+          - { entity: 'Profile', icon: 'users', label: 'Profil' }
+          - { entity: 'TypeActivity', icon: 'box', label: "Type d'Activite" }
+          - { entity: 'State', icon: 'calendar-check', label: 'Etat' }
+          - { entity: 'Text', icon: 'book', label: 'Texte' }
+
+  formats:
+    # Ici on définit le format des dates
+    datetime: 'd/m/Y à H:i'
